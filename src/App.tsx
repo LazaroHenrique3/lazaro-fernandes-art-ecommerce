@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter } from 'react-router-dom'
+
+import {
+    AppThemeProvider,
+    NavBarProvider,
+    AuthProvider
+} from './shared/contexts'
+
+import { MainRoutes } from './routes'
+
+//Importando o Toasts
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <AuthProvider>
+            <AppThemeProvider>
+
+                <BrowserRouter>
+
+                    <NavBarProvider>
+                        <MainRoutes />
+                    </NavBarProvider>
+
+                    <ToastContainer autoClose={5000} position={toast.POSITION.BOTTOM_LEFT} />
+                </BrowserRouter>
+
+            </AppThemeProvider>
+        </AuthProvider>
+    )
 }
 
-export default App;
+export default App
