@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 
-import { NavBar } from '../components'
+import { NavBar, Footer } from '../components'
 
 interface BasePageEcommerceLayout {
     children: React.ReactNode,
@@ -9,12 +9,13 @@ interface BasePageEcommerceLayout {
 export const BasePageEcommerceLayout: React.FC<BasePageEcommerceLayout> = ({ children }) => {
 
     return (
-        <Box height='100%' display='flex' flexDirection='column' gap={1}>
-
+        <Box height='100%' display='flex' flexDirection='column'>
             <NavBar />
 
             <Box flex={1} overflow='auto'>
                 {children}
+
+                <Footer />
             </Box>
         </Box>
     )

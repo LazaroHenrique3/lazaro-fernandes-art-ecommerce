@@ -1,54 +1,77 @@
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import Menu from '@mui/material/Menu'
-import MenuIcon from '@mui/icons-material/Menu'
-import Container from '@mui/material/Container'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
-import MenuItem from '@mui/material/MenuItem'
-import AdbIcon from '@mui/icons-material/Adb'
+import {
+    AppBar,
+    Box,
+    Toolbar,
+    IconButton,
+    Typography,
+    Menu,
+    Container,
+    Avatar,
+    Tooltip,
+    MenuItem,
+    Icon,
+    List
+} from '@mui/material'
 
-import { useNavBarContext } from '../../contexts'
+import {
+    useMatch,
+    useNavigate,
+    useResolvedPath
+} from 'react-router-dom'
+
+import {
+    useAppThemeContext,
+    useAuthContext,
+    useNavBarContext
+} from '../../contexts'
+
+import logo from '../../.././images/logo.svg'
+
+interface IListMenuItemProps {
+    to: string,
+    label: string,
+    onClick: () => void
+}
+
+const ListMenuItem: React.FC<IListMenuItemProps> = ({ to, label, onClick }) => {
+    const navigate = useNavigate()
+
+    //Descobrindo se a rota foi seleciona ou não através da url
+    const resolvePath = useResolvedPath(to)
+    const match = useMatch({ path: resolvePath.pathname, end: false })
+
+    const handleClick = () => {
+        onClick?.()
+        navigate(to)
+    }
+
+    return (
+        <MenuItem selected={!!match} onClick={handleClick}>
+            <Typography textAlign="center">{label}</Typography>
+        </MenuItem>
+    )
+}
 
 export const NavBar = () => {
-  
+    const { toggleTheme } = useAppThemeContext()
+    const { logout, isAuthenticated, idUser } = useAuthContext()
+
     const {
-        anchorElNav, 
-        anchorElUser, 
-        pagesOptions, 
-        settingsOptions, 
-        handleCloseNavMenu, 
-        handleCloseUserMenu, 
-        handleOpenNavMenu, 
-        handleOpenUserMenu 
+        anchorElNav,
+        anchorElUser,
+        pagesOptions,
+        settingsOptions,
+        handleCloseNavMenu,
+        handleCloseUserMenu,
+        handleOpenNavMenu,
+        handleOpenUserMenu
     } = useNavBarContext()
-    console.log('Options: ', pagesOptions)
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        LOGO
-                    </Typography>
+                    <Avatar alt="Remy Sharp" src={logo} />
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -59,7 +82,7 @@ export const NavBar = () => {
                             onClick={handleOpenNavMenu}
                             color="inherit"
                         >
-                            <MenuIcon />
+                            <Icon>menu_icon</Icon>
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -80,47 +103,28 @@ export const NavBar = () => {
                             }}
                         >
                             {pagesOptions.map((page) => (
-                                <MenuItem key={page.label} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page.label}</Typography>
-                                </MenuItem>
+                                <ListMenuItem key={page.label} to={page.path} label={page.label} onClick={handleCloseNavMenu} />
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        LOGO
-                    </Typography>
+
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pagesOptions.map((page) => (
-                            <Button
-                                key={page.label}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                {page.label}
-                            </Button>
-                        ))}
+                        <List sx={{ marginLeft: 2, display: 'flex', gap: 1 }}>
+                            {pagesOptions.map((page) => (
+                                <ListMenuItem key={page.label} to={page.path} label={page.label} onClick={handleCloseNavMenu} />
+                            ))}
+                        </List>
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
+                        <Tooltip title="Alternar Tema">
+                            <IconButton onClick={() => toggleTheme()}>
+                                <Icon sx={{ color: '#FFFFFF' }}>brightness_4_icon</Icon>
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Abrir Opções">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt="Sharp" src="/static/images/avatar/1.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -140,9 +144,7 @@ export const NavBar = () => {
                             onClose={handleCloseUserMenu}
                         >
                             {settingsOptions.map((setting) => (
-                                <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting.label}</Typography>
-                                </MenuItem>
+                                <ListMenuItem key={setting.label} to={setting.path} label={setting.label} onClick={handleCloseUserMenu} />
                             ))}
                         </Menu>
                     </Box>

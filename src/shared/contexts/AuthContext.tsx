@@ -27,7 +27,6 @@ const LOCAL_STORAGE_KEY__TYPE_USER = 'APP_TYPE_USER'
 const LOCAL_STORAGE_KEY__ACCESS_LEVEL = 'ACCESS_LEVEL'
 const LOCAL_STORAGE_KEY__ACCESS_TOKEN = 'APP_ACCESS_TOKEN'
 
-
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     const [name, setName] = useState<string>()
     const [idUser, setUserId] = useState<number>()

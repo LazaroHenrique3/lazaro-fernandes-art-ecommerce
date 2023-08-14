@@ -1,4 +1,4 @@
-import { Routes, Route} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react'
 
 import '../shared/services/yup/TranslationsYup'
@@ -6,6 +6,10 @@ import '../shared/services/yup/TranslationsYup'
 import { useNavBarContext } from '../shared/contexts'
 
 import {
+    Home,
+    Store,
+    About,
+    Contact,
     PageNotFound,
 } from '../pages'
 
@@ -16,19 +20,19 @@ export const MainRoutes = () => {
         setPagesOptions([
             {
                 label: 'Home',
-                path: '/admin/admin-home'
+                path: '/home'
             },
             {
                 label: 'Loja',
-                path: '/admin/customer'
+                path: '/store'
             },
             {
                 label: 'Sobre',
-                path: '/admin/administrator'
+                path: '/about'
             },
             {
                 label: 'Contato',
-                path: '/admin/administrator'
+                path: '/contact'
             },
         ])
 
@@ -46,7 +50,15 @@ export const MainRoutes = () => {
 
     return (
         <Routes>
-            <Route path='*' element={<PageNotFound/>} />
+            <Route path='/home' element={<Home />} />
+
+            <Route path='/store' element={<Store />} />
+
+            <Route path='/about' element={<About />} />
+
+            <Route path='/contact' element={<Contact />} />
+
+            <Route path='*' element={<PageNotFound />} />
         </Routes>
     )
 }
