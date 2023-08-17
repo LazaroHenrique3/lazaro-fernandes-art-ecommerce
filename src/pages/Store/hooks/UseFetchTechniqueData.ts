@@ -8,6 +8,7 @@ import { TechniqueService } from '../../../shared/services/api/technique/Techniq
 type TSearchOptionsList = {
     id: number
     label: string
+    product_count: number
 }
 
 interface IUseFetchTechniqueDataProps {
@@ -31,7 +32,9 @@ export const UseFetchTechniqueData = ({ setIsLoading }: IUseFetchTechniqueDataPr
                 return
             }
 
-            setCategories(result.data.map(technique => ({ id: technique.id, label: technique.name })))
+            const techniquesWithProducts = result.data.filter(technique => technique.product_count > 0)
+
+            setCategories(techniquesWithProducts.map(technique => ({ id: technique.id, label: technique.name, product_count: technique.product_count })))
         }
 
         fetchData()

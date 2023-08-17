@@ -1,14 +1,9 @@
-import { Environment } from '../../../environment'
 import { api } from '../axiosConfig'
 
 export interface IListCategory {
     id: number
     name: string
-}
-
-export interface IDetailCategory {
-    id: number
-    name: string
+    product_count: number
 }
 
 type ICategoryTotalCount = {
@@ -26,13 +21,15 @@ interface ErrorResponse {
     }
 }
 
+const LIMIT_OF_CATEGORIES = 25
+
 const getAll = async (page = 1, filter = '', id?: number): Promise<ICategoryTotalCount | Error> => {
     let relativeUrl = ''
 
     if (id) {
-        relativeUrl = `/category?id=${id}&page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}`
+        relativeUrl = `/category?id=${id}&page=${page}&limit=${LIMIT_OF_CATEGORIES}&filter=${filter}`
     } else {
-        relativeUrl = `/category?page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}`
+        relativeUrl = `/category?page=${page}&limit=${LIMIT_OF_CATEGORIES}&filter=${filter}`
     }
 
     try {
@@ -41,7 +38,7 @@ const getAll = async (page = 1, filter = '', id?: number): Promise<ICategoryTota
         if (data) {
             return {
                 data,
-                totalCount: Number(headers['x-total-count'] || Environment.LINE_LIMIT)
+                totalCount: Number(headers['x-total-count'] || LIMIT_OF_CATEGORIES)
             }
         }
 

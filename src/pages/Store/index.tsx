@@ -20,7 +20,7 @@ import { BasePageEcommerceLayout } from '../../shared/layouts'
 import {
     ListProductsForSaleTools,
     ProductCard,
-    OptionsSearchMenu
+    SearchMenu
 } from './components'
 
 //Hooks personalizados
@@ -100,7 +100,7 @@ export const Store = () => {
 
                 <Grid container marginBottom={10} spacing={4} alignItems='stretch'>
                     <Grid container item xs={12} sm={3} md={3}>
-                        <OptionsSearchMenu
+                        <SearchMenu
                             selectedCategory={category}
                             selectedTechnique={technique}
                             selectedOrder={order}

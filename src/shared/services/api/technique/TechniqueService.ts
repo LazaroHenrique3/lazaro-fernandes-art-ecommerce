@@ -1,14 +1,9 @@
-import { Environment } from '../../../environment'
 import { api } from '../axiosConfig'
 
 export interface IListTechnique {
     id: number
     name: string
-}
-
-export interface IDetailTechnique {
-    id: number
-    name: string
+    product_count: number
 }
 
 type ITechniqueTotalCount = {
@@ -26,13 +21,15 @@ interface ErrorResponse {
     }
 }
 
+const LIMIT_OF_TECHNIQUES = 100
+
 const getAll = async (page = 1, filter = '', id?: number): Promise<ITechniqueTotalCount | Error> => {
     let relativeUrl = ''
 
     if (id) {
-        relativeUrl = `/technique?id=${id}&page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}`
+        relativeUrl = `/technique?id=${id}&page=${page}&limit=${LIMIT_OF_TECHNIQUES}&filter=${filter}`
     } else {
-        relativeUrl = `/technique?page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}`
+        relativeUrl = `/technique?page=${page}&limit=${LIMIT_OF_TECHNIQUES}&filter=${filter}`
     }
 
     try {
@@ -41,7 +38,7 @@ const getAll = async (page = 1, filter = '', id?: number): Promise<ITechniqueTot
         if (data) {
             return {
                 data,
-                totalCount: Number(headers['x-total-count'] || Environment.LINE_LIMIT)
+                totalCount: Number(headers['x-total-count'] || LIMIT_OF_TECHNIQUES)
             }
         }
 

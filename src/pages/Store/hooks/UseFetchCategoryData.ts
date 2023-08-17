@@ -8,6 +8,7 @@ import { CategoryService } from '../../../shared/services/api/category/CategoryS
 type TSearchOptionsList = {
     id: number
     label: string
+    product_count: number
 }
 
 interface IUseFetchCategoryDataProps {
@@ -31,7 +32,9 @@ export const UseFetchCategoryData = ({ setIsLoading }: IUseFetchCategoryDataProp
                 return
             }
 
-            setCategories(result.data.map(category => ({ id: category.id, label: category.name })))
+            const categoriesWithProducts = result.data.filter(category => category.product_count > 0)
+
+            setCategories(categoriesWithProducts.map(category => ({ id: category.id, label: category.name, product_count: category.product_count })))
         }
 
         fetchData()

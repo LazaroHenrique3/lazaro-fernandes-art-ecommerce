@@ -72,22 +72,7 @@ export const ProductDetails = () => {
                                 description={product.description} />
                         </>
                     )}
-
-                    <Grid container marginTop={5} justifyContent='center' justifyItems='center' item xl={12} component={Paper}>
-
-                        <Typography variant='h3' marginBottom={10} color={theme.palette.primary.light} fontWeight={800}>
-                            Similares
-                        </Typography>
-                        
-                        <Box display='flex' width='100%' flexDirection='column' alignItems='center' bgcolor='red'>
-
-                        </Box>
-
-
-                    </Grid>
-
                 </Grid>
-
             </Box>
         </BasePageEcommerceLayout>
     )

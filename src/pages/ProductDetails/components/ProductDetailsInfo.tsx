@@ -31,7 +31,7 @@ export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({
 
     return (
         <Grid container item sm={12} md={7}>
-            <Box width='100%' display='flex'  flexDirection='column' rowGap={2} alignItems='start'>
+            <Box width='100%' display='flex' alignSelf='center' flexDirection='column' rowGap={2} alignItems='start'>
                 <Box>
                     <Typography variant='h5' color={theme.palette.primary.light} fontWeight={600}>
                         Detalhes
