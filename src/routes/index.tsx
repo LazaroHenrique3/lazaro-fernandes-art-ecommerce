@@ -40,11 +40,18 @@ export const MainRoutes = () => {
         setSettingsOptions([
             {
                 label: 'Meu perfil',
+                icon: 'account_circle',
                 path: '/customer/profile'
             },
             {
                 label: 'Logout',
+                icon: 'logout',
                 path: '/customer/logout'
+            },
+            {
+                label: 'Alternar Tema',
+                icon: 'brightness_4_icon',
+                path: ''
             }
         ])
     }, [])
@@ -54,7 +61,7 @@ export const MainRoutes = () => {
             <Route path='/home' element={<Home />} />
 
             <Route path='/store' element={<Store />} />
-            <Route path='/product/details/:id' element={<ProductDetails/>} />
+            <Route path='/product/details/:id' element={<ProductDetails />} />
 
             <Route path='/about' element={<About />} />
 

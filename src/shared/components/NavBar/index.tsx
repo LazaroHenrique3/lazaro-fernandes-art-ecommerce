@@ -29,31 +29,40 @@ import logo from '../../.././images/logo.svg'
 
 interface IListMenuItemProps {
     to: string,
+    icon?: string,
     label: string,
     onClick: () => void
 }
 
-const ListMenuItem: React.FC<IListMenuItemProps> = ({ to, label, onClick }) => {
+const ListMenuItem: React.FC<IListMenuItemProps> = ({ to, icon, label, onClick }) => {
     const navigate = useNavigate()
+    const { toggleTheme } = useAppThemeContext()
 
     //Descobrindo se a rota foi seleciona ou não através da url
     const resolvePath = useResolvedPath(to)
     const match = useMatch({ path: resolvePath.pathname, end: false })
 
     const handleClick = () => {
-        onClick?.()
-        navigate(to)
+        if (to !== '') {
+            onClick?.()
+            navigate(to)
+        } else {
+            onClick?.()
+            toggleTheme()
+        }
     }
 
     return (
-        <MenuItem selected={!!match} onClick={handleClick}>
-            <Typography textAlign="center">{label}</Typography>
+        <MenuItem selected={(!!match && to !== '')} onClick={handleClick}>
+            {icon && (
+                <Icon>{icon}</Icon>
+            )}
+            <Typography marginLeft={1} textAlign="center">{label}</Typography>
         </MenuItem>
     )
 }
 
 export const NavBar = () => {
-    const { toggleTheme } = useAppThemeContext()
     const { logout, isAuthenticated, idUser } = useAuthContext()
 
     const {
@@ -117,9 +126,9 @@ export const NavBar = () => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Alternar Tema">
-                            <IconButton onClick={() => toggleTheme()}>
-                                <Icon sx={{ color: '#FFFFFF' }}>brightness_4_icon</Icon>
+                        <Tooltip title="Abrir Opções">
+                            <IconButton onClick={ () => console.log() } sx={{ p: 0, marginRight: 1 }}>
+                                <Icon sx={{color: 'white'}}>shopping_cart</Icon>
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Abrir Opções">
@@ -144,7 +153,7 @@ export const NavBar = () => {
                             onClose={handleCloseUserMenu}
                         >
                             {settingsOptions.map((setting) => (
-                                <ListMenuItem key={setting.label} to={setting.path} label={setting.label} onClick={handleCloseUserMenu} />
+                                <ListMenuItem key={setting.label} icon={setting.icon} to={setting.path} label={setting.label} onClick={handleCloseUserMenu} />
                             ))}
                         </Menu>
                     </Box>
