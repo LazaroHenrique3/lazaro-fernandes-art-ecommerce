@@ -8,6 +8,7 @@ import { useNavBarContext } from '../shared/contexts'
 import {
     Home,
     Store,
+    ProductDetails,
     About,
     Contact,
     PageNotFound,
@@ -53,6 +54,7 @@ export const MainRoutes = () => {
             <Route path='/home' element={<Home />} />
 
             <Route path='/store' element={<Store />} />
+            <Route path='/product/details/:id' element={<ProductDetails/>} />
 
             <Route path='/about' element={<About />} />
 

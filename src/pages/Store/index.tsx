@@ -66,8 +66,13 @@ export const Store = () => {
         return searchParams.get('technique') || ''
     }, [searchParams])
 
+    const order = useMemo(() => {
+        //Pega o parâmetro na URL
+        return searchParams.get('order') || ''
+    }, [searchParams])
+
     //Buscando os produtos
-    UseFetchProductData({ setIsLoading, setProducts, setTotalCount, search, category, technique, page })
+    UseFetchProductData({ setIsLoading, setProducts, setTotalCount, search, category, technique, order, page })
 
     //Controla se o menu de filtro aparece em dispositivos menores
     const [openSearchFilterMenu, setOpenSearchFilterMenu] = useState(false)
@@ -87,7 +92,7 @@ export const Store = () => {
                 </Typography>
 
                 <ListProductsForSaleTools
-                    onChangeSearchText={text => setSearchParams({ search: text, category: category, technique: technique, page: '1' }, { replace: true })}
+                    onChangeSearchText={text => setSearchParams({ search: text, category: category, technique: technique, order: order, page: '1' }, { replace: true })}
                     searchText={search}
                     showFilterButton={smDown}
                     onClickFilterButton={setOpenSearchFilterMenu}
@@ -98,10 +103,12 @@ export const Store = () => {
                         <OptionsSearchMenu
                             selectedCategory={category}
                             selectedTechnique={technique}
+                            selectedOrder={order}
                             openSearchFilterMenu={openSearchFilterMenu}
                             setOpenSearchFilterMenu={setOpenSearchFilterMenu}
-                            onClickSelectCategoryFilter={text => setSearchParams({ search: search, category: text, technique: technique, page: '1' }, { replace: true })}
-                            onClickSelectTechniqueFilter={text => setSearchParams({ search: search, category: category, technique: text, page: '1' }, { replace: true })}
+                            onClickSelectCategoryFilter={text => setSearchParams({ search: search, category: text, technique: technique, order: order, page: '1' }, { replace: true })}
+                            onClickSelectTechniqueFilter={text => setSearchParams({ search: search, category: category, technique: text, order: order, page: '1' }, { replace: true })}
+                            onClickOrderFilter={text => setSearchParams({ search: search, category: category, technique: technique, order: text, page: '1' }, { replace: true })}
                         />
                     </Grid>
 
@@ -130,7 +137,13 @@ export const Store = () => {
                                 ) : (
                                     <>
                                         {products.map((product) => (
-                                            <ProductCard key={product.id} id={product.id} title={product.title} image={product.main_image} price={product.price} />
+                                            <ProductCard
+                                                key={product.id}
+                                                id={product.id}
+                                                title={product.title}
+                                                status={product.status}
+                                                image={product.main_image}
+                                                price={product.price} />
                                         ))}
                                     </>
                                 )}

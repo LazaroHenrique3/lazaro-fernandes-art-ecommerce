@@ -20,18 +20,22 @@ interface IOptionsSearchMenuProps {
     openSearchFilterMenu: boolean
     selectedCategory: string
     selectedTechnique: string
+    selectedOrder: string
     setOpenSearchFilterMenu: (openSearchFilterMenu: boolean) => void
     onClickSelectCategoryFilter: (newText: string) => void
     onClickSelectTechniqueFilter: (newText: string) => void
+    onClickOrderFilter: (newText: string) => void
 }
 
 export const OptionsSearchMenu: React.FC<IOptionsSearchMenuProps> = ({
     openSearchFilterMenu,
     selectedCategory,
     selectedTechnique,
+    selectedOrder,
     setOpenSearchFilterMenu,
     onClickSelectCategoryFilter,
-    onClickSelectTechniqueFilter
+    onClickSelectTechniqueFilter,
+    onClickOrderFilter,
 }) => {
 
     const theme = useTheme()
@@ -62,6 +66,20 @@ export const OptionsSearchMenu: React.FC<IOptionsSearchMenuProps> = ({
                             component="nav"
                             aria-labelledby="nested-list-subheader"
                         >
+                            <ListSubheader component="div" id="nested-list-subheader" sx={listSubheaderStyle}>
+                                Ordenar
+                            </ListSubheader>
+                            <ListItemButton
+                                selected={(selectedOrder === 'ASC' || selectedOrder === '')}
+                                onClick={() => { onClickOrderFilter('ASC'); setOpenSearchFilterMenu(false) }}>
+                                <ListItemText primary='Menor preço' />
+                            </ListItemButton>
+                            <ListItemButton
+                                selected={selectedOrder === 'DESC'}
+                                onClick={() => { onClickOrderFilter('DESC'); setOpenSearchFilterMenu(false) }}>
+                                <ListItemText primary='Maior preço' />
+                            </ListItemButton>
+
                             <ListSubheader component="div" id="nested-list-subheader" sx={listSubheaderStyle}>
                                 Categorias
                             </ListSubheader>

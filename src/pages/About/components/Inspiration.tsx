@@ -7,7 +7,7 @@ import {
     Divider
 } from '@mui/material'
 
-import lightOfRope from '../../.././images/products/4.png'
+import lightOfRope from '../../.././images/inspiration.png'
 
 export const Inspiration = () => {
     const theme = useTheme()
