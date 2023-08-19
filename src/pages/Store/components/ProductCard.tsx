@@ -14,6 +14,7 @@ import {
 } from '@mui/material'
 
 import { formattedPrice } from '../../../shared/util'
+import { useCartContext } from '../../../shared/contexts'
 
 const cardStyle = {
     width: 260,
@@ -31,10 +32,13 @@ interface IProductCardProps {
     status: string
     image: string
     price: number
+    quantity: number
 }
 
-export const ProductCard: React.FC<IProductCardProps> = ({ id, title, status, image, price }) => {
+export const ProductCard: React.FC<IProductCardProps> = ({ id, title, status, image, price, quantity }) => {
     const theme = useTheme()
+
+    const { addProductInCart } = useCartContext()
 
     const navigate = useNavigate()
 
@@ -64,7 +68,10 @@ export const ProductCard: React.FC<IProductCardProps> = ({ id, title, status, im
                         </Button>
 
                         {status !== 'Vendido' && (
-                            <Button variant='contained' size="small">
+                            <Button variant='contained' size="small" onClick={(event) => {
+                                event.stopPropagation()
+                                addProductInCart({id, title, image, price, quantity, quantitySelected: 1})
+                            }}>
                                 <Icon>
                                     add_shopping_cart_icon
                                 </Icon>

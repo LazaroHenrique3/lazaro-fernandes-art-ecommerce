@@ -1,4 +1,4 @@
 export * from './Welcome'
 export * from './Banner'
-export * from './LatestArts'
+export * from './PopularArts'
 export * from './OriginalArts'

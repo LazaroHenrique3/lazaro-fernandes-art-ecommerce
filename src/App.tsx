@@ -3,7 +3,8 @@ import { BrowserRouter } from 'react-router-dom'
 import {
     AppThemeProvider,
     NavBarProvider,
-    AuthProvider
+    AuthProvider,
+    CartProvider
 } from './shared/contexts'
 
 import { MainRoutes } from './routes'
@@ -16,16 +17,18 @@ function App() {
     return (
         <AuthProvider>
             <AppThemeProvider>
+                <CartProvider>
 
-                <BrowserRouter>
+                    <BrowserRouter>
 
-                    <NavBarProvider>
-                        <MainRoutes />
-                    </NavBarProvider>
+                        <NavBarProvider>
+                            <MainRoutes />
+                        </NavBarProvider>
 
-                    <ToastContainer autoClose={5000} position={toast.POSITION.BOTTOM_LEFT} />
-                </BrowserRouter>
+                        <ToastContainer autoClose={5000} position={toast.POSITION.BOTTOM_LEFT} />
+                    </BrowserRouter>
 
+                </CartProvider>
             </AppThemeProvider>
         </AuthProvider>
     )

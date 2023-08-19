@@ -32,13 +32,13 @@ const cardStyle = {
     },
 }
 
-export const LatestArts = () => {
+export const PopularArts = () => {
     const theme = useTheme()
 
     return (
         <Box marginBottom={10} display='flex' alignItems='center' flexDirection='column' padding={5} component='section'>
             <Typography variant="h4" color={theme.palette.primary.light} fontWeight={800}>
-                Trabalhos recentes
+                Trabalhos populares
             </Typography>
 
 

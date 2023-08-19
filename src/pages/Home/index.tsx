@@ -2,7 +2,7 @@ import { BasePageEcommerceLayout } from '../../shared/layouts'
 import { 
     Banner,
     Welcome,
-    LatestArts,
+    PopularArts,
     OriginalArts
 } from './components'
 
@@ -13,7 +13,7 @@ export const Home = () => {
         <BasePageEcommerceLayout>
             <Banner/>
             <Welcome/>   
-            <LatestArts/>
+            <PopularArts/>
             <OriginalArts/>
         </BasePageEcommerceLayout>
     )

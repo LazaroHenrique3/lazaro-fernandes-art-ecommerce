@@ -1,4 +1,5 @@
 export * from './NavBar'
+export * from './Cart'
 export * from './Footer'
 export * from './ImageHandler'
 export * from './PrivateCustomer'

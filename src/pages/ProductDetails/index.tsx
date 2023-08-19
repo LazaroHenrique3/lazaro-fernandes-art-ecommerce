@@ -62,13 +62,7 @@ export const ProductDetails = () => {
                     ) : (
                         <>
                             <ProductImages images={productImages as IImageProps[]} />
-                            <ProductDetailsInfo
-                                category={product.category_name}
-                                technique={product.technique_name}
-                                dimension={product.dimension_name}
-                                price={product.price}
-                                production={product.production_date}
-                                description={product.description} />
+                            <ProductDetailsInfo product={product}/>
                         </>
                     )}
                 </Grid>

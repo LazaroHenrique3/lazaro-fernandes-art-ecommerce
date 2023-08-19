@@ -10,7 +10,8 @@ import {
     Tooltip,
     MenuItem,
     Icon,
-    List
+    List,
+    Badge
 } from '@mui/material'
 
 import {
@@ -22,7 +23,8 @@ import {
 import {
     useAppThemeContext,
     useAuthContext,
-    useNavBarContext
+    useNavBarContext,
+    useCartContext
 } from '../../contexts'
 
 import logo from '../../.././images/logo.svg'
@@ -64,6 +66,7 @@ const ListMenuItem: React.FC<IListMenuItemProps> = ({ to, icon, label, onClick }
 
 export const NavBar = () => {
     const { logout, isAuthenticated, idUser } = useAuthContext()
+    const { productsInCart, toggleCartIsOpen } = useCartContext()
 
     const {
         anchorElNav,
@@ -77,7 +80,7 @@ export const NavBar = () => {
     } = useNavBarContext()
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{ zIndex: 1 }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Avatar alt="Remy Sharp" src={logo} />
@@ -126,10 +129,12 @@ export const NavBar = () => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Abrir Opções">
-                            <IconButton onClick={ () => console.log() } sx={{ p: 0, marginRight: 1 }}>
-                                <Icon sx={{color: 'white'}}>shopping_cart</Icon>
-                            </IconButton>
+                        <Tooltip title="Carrinho">
+                            <Badge badgeContent={String(productsInCart.length)} color="success" sx={{marginRight: 2}}>
+                                <IconButton onClick={toggleCartIsOpen} sx={{ p: 0}}>
+                                    <Icon sx={{ color: 'white' }}>shopping_cart</Icon>
+                                </IconButton>
+                            </Badge>
                         </Tooltip>
                         <Tooltip title="Abrir Opções">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

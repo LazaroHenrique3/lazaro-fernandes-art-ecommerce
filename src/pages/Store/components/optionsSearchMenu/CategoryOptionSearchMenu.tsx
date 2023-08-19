@@ -6,6 +6,8 @@ import {
     Box,
 } from '@mui/material'
 
+import { Scrollbars } from 'react-custom-scrollbars-2'
+
 type TSearchOptionsList = {
     id: number
     label: string
@@ -39,21 +41,36 @@ export const CategoryOptionSearchMenu: React.FC<ICategoryOptionSearchMenu> = ({
             <ListSubheader component="div" id="nested-list-subheader" sx={listSubheaderStyle}>
                 Categorias
             </ListSubheader>
-            <Box maxHeight='400px' sx={{ overflowY: categories.length > 7 ? 'scroll' : 'visible' }}>
-                <ListItemButton
-                    selected={selectedCategory === ''}
-                    onClick={() => { onClickSelectCategoryFilter(''); setOpenSearchFilterMenu(false) }}>
-                    <ListItemText primary='Todas' />
-                </ListItemButton>
-                {categories.map(category => (
+            <Scrollbars
+                style={{ height: '200px' }}
+                renderThumbVertical={(props) => (
+                    <div
+                        {...props}
+                        style={{
+                            ...props.style,
+                            backgroundColor: theme.palette.primary.main,
+                            borderRadius: '4px',
+                            width: '6px',
+                        }}
+                    />
+                )}
+            >
+                <Box>
                     <ListItemButton
-                        key={category.id}
-                        selected={selectedCategory === category.label}
-                        onClick={() => { onClickSelectCategoryFilter(category.label); setOpenSearchFilterMenu(false) }}>
-                        <ListItemText primary={`${category.label} (${category.product_count})`} />
+                        selected={selectedCategory === ''}
+                        onClick={() => { onClickSelectCategoryFilter(''); setOpenSearchFilterMenu(false) }}>
+                        <ListItemText primary='Todas' />
                     </ListItemButton>
-                ))}
-            </Box>
+                    {categories.map(category => (
+                        <ListItemButton
+                            key={category.id}
+                            selected={selectedCategory === category.label}
+                            onClick={() => { onClickSelectCategoryFilter(category.label); setOpenSearchFilterMenu(false) }}>
+                            <ListItemText primary={`${category.label} (${category.product_count})`} />
+                        </ListItemButton>
+                    ))}
+                </Box>
+            </Scrollbars>
         </>
     )
 }

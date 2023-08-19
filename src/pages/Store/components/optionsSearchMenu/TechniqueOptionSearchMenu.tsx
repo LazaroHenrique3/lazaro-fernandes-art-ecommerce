@@ -6,6 +6,8 @@ import {
     Box,
 } from '@mui/material'
 
+import { Scrollbars } from 'react-custom-scrollbars-2'
+
 type TSearchOptionsList = {
     id: number
     label: string
@@ -39,21 +41,37 @@ export const TechniqueOptionSearchMenu: React.FC<ITechniqueOptionSearchMenu> = (
             <ListSubheader component="div" id="nested-list-subheader" sx={listSubheaderStyle}>
                 Técnicas
             </ListSubheader>
-            <Box maxHeight='400px' sx={{ overflowY: techniques.length > 7 ? 'scroll' : 'visible' }}>
-                <ListItemButton
-                    selected={selectedTechnique === ''}
-                    onClick={() => { onClickSelectTechniqueFilter(''); setOpenSearchFilterMenu(false) }}>
-                    <ListItemText primary='Todas' />
-                </ListItemButton>
-                {techniques.map(technique => (
+            <Scrollbars
+                style={{ height: '200px' }}
+                renderThumbVertical={(props) => (
+                    <div
+                        {...props}
+                        style={{
+                            ...props.style,
+                            backgroundColor: theme.palette.primary.main,
+                            borderRadius: '4px',
+                            width: '6px',
+                        }}
+                    />
+                )}
+            >
+                <Box >
                     <ListItemButton
-                        key={technique.id}
-                        selected={selectedTechnique === technique.label}
-                        onClick={() => { onClickSelectTechniqueFilter(technique.label); setOpenSearchFilterMenu(false) }}>
-                        <ListItemText primary={`${technique.label} (${technique.product_count})`} />
+                        selected={selectedTechnique === ''}
+                        onClick={() => { onClickSelectTechniqueFilter(''); setOpenSearchFilterMenu(false) }}>
+                        <ListItemText primary='Todas' />
                     </ListItemButton>
-                ))}
-            </Box>
+                    {techniques.map(technique => (
+                        <ListItemButton
+                            key={technique.id}
+                            selected={selectedTechnique === technique.label}
+                            onClick={() => { onClickSelectTechniqueFilter(technique.label); setOpenSearchFilterMenu(false) }}>
+                            <ListItemText primary={`${technique.label} (${technique.product_count})`} />
+                        </ListItemButton>
+                    ))}
+                </Box>
+
+            </Scrollbars>
         </>
     )
 }
