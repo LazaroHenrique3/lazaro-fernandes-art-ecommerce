@@ -3,7 +3,7 @@ import { BasePageEcommerceLayout } from '../../shared/layouts'
 import { 
     AboutMe, 
     FuturePlans, 
-    Inspiration 
+    Inspiration,
 } from './components'
 
 export const About = () => {

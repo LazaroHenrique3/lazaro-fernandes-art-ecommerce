@@ -22,10 +22,11 @@ import {
 
 import {
     useAppThemeContext,
-    useAuthContext,
     useNavBarContext,
     useCartContext
 } from '../../contexts'
+
+import { LoginModal } from '../Modals'
 
 import logo from '../../.././images/logo.svg'
 
@@ -40,17 +41,28 @@ const ListMenuItem: React.FC<IListMenuItemProps> = ({ to, icon, label, onClick }
     const navigate = useNavigate()
     const { toggleTheme } = useAppThemeContext()
 
+    const {
+        handleCloseModalLogin,
+        handleOpenModalLogin
+    } = useNavBarContext()
+
     //Descobrindo se a rota foi seleciona ou não através da url
     const resolvePath = useResolvedPath(to)
     const match = useMatch({ path: resolvePath.pathname, end: false })
 
     const handleClick = () => {
+        onClick?.()
+
         if (to !== '') {
-            onClick?.()
             navigate(to)
         } else {
-            onClick?.()
-            toggleTheme()
+            if (label === 'Sair') {
+                handleCloseModalLogin()
+            } else if (label === 'Logar') {
+                handleOpenModalLogin()
+            } else {
+                toggleTheme()
+            }
         }
     }
 
@@ -65,7 +77,6 @@ const ListMenuItem: React.FC<IListMenuItemProps> = ({ to, icon, label, onClick }
 }
 
 export const NavBar = () => {
-    const { logout, isAuthenticated, idUser } = useAuthContext()
     const { productsInCart, toggleCartIsOpen } = useCartContext()
 
     const {
@@ -76,7 +87,7 @@ export const NavBar = () => {
         handleCloseNavMenu,
         handleCloseUserMenu,
         handleOpenNavMenu,
-        handleOpenUserMenu
+        handleOpenUserMenu,
     } = useNavBarContext()
 
     return (
@@ -130,8 +141,8 @@ export const NavBar = () => {
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Carrinho">
-                            <Badge badgeContent={String(productsInCart.length)} color="success" sx={{marginRight: 2}}>
-                                <IconButton onClick={toggleCartIsOpen} sx={{ p: 0}}>
+                            <Badge badgeContent={String(productsInCart.length)} color="success" sx={{ marginRight: 2 }}>
+                                <IconButton onClick={toggleCartIsOpen} sx={{ p: 0 }}>
                                     <Icon sx={{ color: 'white' }}>shopping_cart</Icon>
                                 </IconButton>
                             </Badge>
@@ -164,6 +175,7 @@ export const NavBar = () => {
                     </Box>
                 </Toolbar>
             </Container>
+            <LoginModal />
         </AppBar>
     )
 }

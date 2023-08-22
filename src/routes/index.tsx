@@ -3,7 +3,10 @@ import { useEffect } from 'react'
 
 import '../shared/services/yup/TranslationsYup'
 
-import { useNavBarContext } from '../shared/contexts'
+import {
+    useAuthContext,
+    useNavBarContext
+} from '../shared/contexts'
 
 import {
     Home,
@@ -15,6 +18,7 @@ import {
 } from '../pages'
 
 export const MainRoutes = () => {
+    const { isAuthenticated } = useAuthContext()
     const { setPagesOptions, setSettingsOptions } = useNavBarContext()
 
     useEffect(() => {
@@ -37,23 +41,28 @@ export const MainRoutes = () => {
             },
         ])
 
-        setSettingsOptions([
+        const settingsOptions = [
             {
-                label: 'Meu perfil',
-                icon: 'account_circle',
-                path: '/customer/profile'
-            },
-            {
-                label: 'Logout',
-                icon: 'logout',
-                path: '/customer/logout'
+                label: `${isAuthenticated ? 'Sair' : 'Logar'}`,
+                icon: `${isAuthenticated ? 'logout' : 'login'}`,
+                path: '',
             },
             {
                 label: 'Alternar Tema',
                 icon: 'brightness_4_icon',
-                path: ''
-            }
-        ])
+                path: '',
+            },
+        ]
+
+        if (isAuthenticated) {
+            settingsOptions.unshift({
+                label: 'Meu perfil',
+                icon: 'account_circle',
+                path: '/customer/profile',
+            })
+        }
+
+        setSettingsOptions(settingsOptions)
     }, [])
 
     return (

@@ -7,16 +7,20 @@ interface INavBarOption {
 }
 
 interface INavBarContextData {
-    anchorElNav: null | HTMLElement;
-    anchorElUser: null | HTMLElement;
-    pagesOptions: INavBarOption[];
-    settingsOptions: INavBarOption[];
-    setPagesOptions: (newNavBarOptions: INavBarOption[]) => void;
-    setSettingsOptions: (newNavBarOptions: INavBarOption[]) => void;
-    handleOpenNavMenu: (event: React.MouseEvent<HTMLElement>) => void;
-    handleOpenUserMenu: (event: React.MouseEvent<HTMLElement>) => void;
-    handleCloseNavMenu: () => void;
-    handleCloseUserMenu: () => void;
+    anchorElNav: null | HTMLElement
+    anchorElUser: null | HTMLElement
+    pagesOptions: INavBarOption[]
+    settingsOptions: INavBarOption[]
+    openModalLogin: boolean
+    setPagesOptions: (newNavBarOptions: INavBarOption[]) => void
+    setSettingsOptions: (newNavBarOptions: INavBarOption[]) => void
+    handleOpenNavMenu: (event: React.MouseEvent<HTMLElement>) => void
+    handleOpenUserMenu: (event: React.MouseEvent<HTMLElement>) => void
+    handleCloseNavMenu: () => void
+    handleCloseUserMenu: () => void
+    handleOpenModalLogin: () => void
+    handleCloseModalLogin: () => void
+
 }
 
 const NavBarContext = createContext({} as INavBarContextData)
@@ -32,6 +36,14 @@ interface IProviderProps {
 export const NavBarProvider: React.FC<IProviderProps> = ({ children }) => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
+    const [openModalLogin, setOpenModalLogin] = useState(false)
+
+    const handleOpenModalLogin = () => {
+        setOpenModalLogin(true)
+    }
+    const handleCloseModalLogin = () => {
+        setOpenModalLogin(false)
+    }
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget)
@@ -65,12 +77,15 @@ export const NavBarProvider: React.FC<IProviderProps> = ({ children }) => {
             anchorElUser,
             pagesOptions,
             settingsOptions,
+            openModalLogin,
             setPagesOptions: handleSetNavBarOptions,
             setSettingsOptions: handleSetNavBarSettings,
             handleOpenNavMenu,
             handleOpenUserMenu,
             handleCloseNavMenu,
-            handleCloseUserMenu
+            handleCloseUserMenu,
+            handleOpenModalLogin,
+            handleCloseModalLogin
         }}>
             {children}
         </NavBarContext.Provider>
