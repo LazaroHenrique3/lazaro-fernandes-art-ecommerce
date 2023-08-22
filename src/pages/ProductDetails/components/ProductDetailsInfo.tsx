@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 import {
     Grid,
@@ -20,6 +21,8 @@ interface IProductDetailsInfo {
 }
 
 export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) => {
+    const navigate = useNavigate()
+
     const [qtdSelectedProducts, setQtdSelectedProducts] = useState(1)
 
     const { addProductInCart } = useCartContext()
@@ -78,6 +81,14 @@ export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) =
                             quantitySelected: qtdSelectedProducts
                         })}>
                         Adicionar ao carrinho
+                    </Button>
+
+                    <Button
+                        variant='outlined'
+                        endIcon={<Icon>arrow_back_icon</Icon>}
+                        onClick={() => navigate(-1)}
+                    >
+                        Voltar
                     </Button>
                 </Box>
             </Box>

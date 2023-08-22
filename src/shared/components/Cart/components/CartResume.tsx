@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import { 
+    useState,
+    useEffect
+} from 'react'
 
 import {
     useTheme,
@@ -46,7 +49,11 @@ export const CartResume = () => {
     const { formRef } = useVForm('formRef')
 
     const [ isLoading, setIsLoading ] = useState(false)
-    const { shipping, calculateShipping } = UseCalculateShipping({ setIsLoading, formRef })
+    const { shipping, calculateShipping, resetShipping } = UseCalculateShipping({ setIsLoading, formRef })
+
+    useEffect(() => {
+        resetShipping()
+    }, [productsInCart])
 
     const subtotal = productsInCart.reduce((acc, product) => {
         return (product.price * product.quantitySelected) + acc

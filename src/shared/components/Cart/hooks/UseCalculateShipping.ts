@@ -82,7 +82,11 @@ export const UseCalculateShipping = ({ setIsLoading, formRef }: IUseCalculateShi
         }
     }
 
-    return { shipping, calculateShipping }
+    const resetShipping = () => {
+        setShipping(INITIAL_VALUES)
+    }
+
+    return { shipping, calculateShipping, resetShipping }
 
 }
 
