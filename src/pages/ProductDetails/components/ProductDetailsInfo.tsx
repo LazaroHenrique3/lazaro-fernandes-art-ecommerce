@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import dayjs from 'dayjs'
 import {
     Grid,
     Typography,
     Button,
     Icon,
+    TextField,
     Box
 } from '@mui/material'
 
@@ -18,6 +20,8 @@ interface IProductDetailsInfo {
 }
 
 export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) => {
+    const [qtdSelectedProducts, setQtdSelectedProducts] = useState(1)
+
     const { addProductInCart } = useCartContext()
 
     return (
@@ -44,6 +48,21 @@ export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) =
                     </Typography>
                 </InfoSection>
 
+                <Box width='80px'>
+                    <TextField
+                        type='number'
+                        value={qtdSelectedProducts}
+                        onChange={(e) => setQtdSelectedProducts(Number(e.target.value))}
+                        variant="outlined"
+                        size='small'
+                        InputProps={{
+                            inputProps: {
+                                min: 1,
+                                max: product.quantity
+                            },
+                        }} />
+                </Box>
+
                 <Box display='flex' gap={2}>
                     <Button
                         variant='contained'
@@ -53,8 +72,10 @@ export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) =
                             title: product.title,
                             image: product.main_image,
                             price: product.price,
+                            weight: product.weight,
+                            dimension: product.dimension_name,
                             quantity: product.quantity,
-                            quantitySelected: 1
+                            quantitySelected: qtdSelectedProducts
                         })}>
                         Adicionar ao carrinho
                     </Button>

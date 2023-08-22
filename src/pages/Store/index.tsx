@@ -144,6 +144,8 @@ export const Store = () => {
                                                 status={product.status}
                                                 image={product.main_image}
                                                 price={product.price}
+                                                weight={product.weight}
+                                                dimension={product.dimension_name}
                                                 quantity={product.quantity} />
                                         ))}
                                     </>

@@ -15,7 +15,7 @@ const TextMaskCustom = React.forwardRef<HTMLInputElement, CustomProps>(
         return (
             <IMaskInput
                 {...other}
-                mask="(00) 00000-0000"
+                mask="00000-000"
                 definitions={{
                     '#': /[1-9]/,
                 }}
@@ -27,8 +27,8 @@ const TextMaskCustom = React.forwardRef<HTMLInputElement, CustomProps>(
     },
 )
 
-export const VTextFieldCellphone: React.FC<TextFieldProps> = ({ ...rest }) => {
-    const { fieldName, registerField, defaultValue, error, clearError } = useField('cell_phone')
+export const VTextFieldCEP: React.FC<TextFieldProps> = ({ ...rest }) => {
+    const { fieldName, registerField, defaultValue, error, clearError } = useField('cep')
     const [value, setValue] = useState(defaultValue || '')
 
     useEffect(() => {
@@ -44,7 +44,6 @@ export const VTextFieldCellphone: React.FC<TextFieldProps> = ({ ...rest }) => {
             {...rest}
 
             fullWidth
-            label="Telefone"
 
             error={!!error}
             helperText={error}
@@ -63,14 +62,4 @@ export const VTextFieldCellphone: React.FC<TextFieldProps> = ({ ...rest }) => {
     )
 
 }
-
-
-
-
-
-
-
-
-
-
 

@@ -1,14 +1,23 @@
+import { useState } from 'react'
+
 import {
     useTheme,
     Box,
     Typography,
     Button,
-    Divider
+    Divider,
+    Icon,
+    CircularProgress
 } from '@mui/material'
 
 import { formattedPrice } from '../../../util'
-
 import { useCartContext } from '../../../contexts'
+import { VTextFieldCEP, VForm, useVForm } from '../../../forms'
+
+//hooks personalizados
+import {
+    UseCalculateShipping
+} from '../hooks'
 
 interface ICartSummaryLine {
     label: string,
@@ -31,8 +40,13 @@ const CartSummaryLine = ({ label, value }: ICartSummaryLine) => {
     )
 }
 
+
 export const CartResume = () => {
     const { productsInCart } = useCartContext()
+    const { formRef } = useVForm('formRef')
+
+    const [ isLoading, setIsLoading ] = useState(false)
+    const { shipping, calculateShipping } = UseCalculateShipping({ setIsLoading, formRef })
 
     const subtotal = productsInCart.reduce((acc, product) => {
         return (product.price * product.quantitySelected) + acc
@@ -40,13 +54,34 @@ export const CartResume = () => {
 
     return (
         <Box width='240px' padding={2} position='fixed' bottom='0' display='flex' flexDirection='column' alignContent='center'>
+            <VForm ref={formRef} onSubmit={calculateShipping}>
+                <Box width='100%' display='flex'>
+                    <Box display='flex' width='100%'>
+                        <VTextFieldCEP label='Calcular Frete' size='small'/>
+
+                        <Box>
+                            <Button type='submit' variant='contained' disabled={isLoading}>
+                                {isLoading ? <CircularProgress variant='indeterminate' color='inherit' size={20} /> : <Icon> search </Icon>}
+                            </Button>
+                        </Box>
+                    </Box>
+                </Box>
+            </VForm>
+
+            {Number(shipping.Valor.replace(',', '.')) > 0 && (
+                <Box>
+                    Aproximadamente {shipping.PrazoEntrega} dias.
+                </Box>
+            )}
+
             <CartSummaryLine label="Subtotal" value={subtotal} />
-            <CartSummaryLine label="Frete" value={50} />
-            <Divider variant='fullWidth'/>
-            <CartSummaryLine label="Total" value={(subtotal + 50)} />
+            <CartSummaryLine label="Frete(PAC)" value={Number(shipping.Valor.replace(',', '.'))} />
+            <Divider variant='fullWidth' />
+            <CartSummaryLine label="Total" value={(subtotal + Number(shipping.Valor.replace(',', '.')))} />
 
             <Box display='flex'>
-                <Button fullWidth variant='contained'>
+                <Button fullWidth disabled={(isLoading || Number(shipping.Valor.replace(',', '.')) <= 0)}
+                    variant='contained'>
                     Finalizar compra
                 </Button>
             </Box>

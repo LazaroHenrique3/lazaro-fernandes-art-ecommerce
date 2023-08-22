@@ -32,10 +32,12 @@ interface IProductCardProps {
     status: string
     image: string
     price: number
+    weight: number
+    dimension: string
     quantity: number
 }
 
-export const ProductCard: React.FC<IProductCardProps> = ({ id, title, status, image, price, quantity }) => {
+export const ProductCard: React.FC<IProductCardProps> = ({ id, title, status, image, price, weight, dimension, quantity }) => {
     const theme = useTheme()
 
     const { addProductInCart } = useCartContext()
@@ -70,7 +72,7 @@ export const ProductCard: React.FC<IProductCardProps> = ({ id, title, status, im
                         {status !== 'Vendido' && (
                             <Button variant='contained' size="small" onClick={(event) => {
                                 event.stopPropagation()
-                                addProductInCart({id, title, image, price, quantity, quantitySelected: 1})
+                                addProductInCart({id, title, image, price, weight, dimension, quantity, quantitySelected: 1})
                             }}>
                                 <Icon>
                                     add_shopping_cart_icon

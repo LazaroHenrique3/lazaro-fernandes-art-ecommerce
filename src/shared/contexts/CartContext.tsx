@@ -8,11 +8,13 @@ import {
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-type TProductCart = {
+export type TProductCart = {
     id: number,
     image: string,
     title: string,
     price: number,
+    weight: number,
+    dimension: string,
     quantity: number,
     quantitySelected: number
 }
@@ -35,7 +37,7 @@ export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
     const [productsInCart, setProductsInCart] = useState<TProductCart[]>([])
     const [cartIsOpen, setCartIsOpen] = useState(false)
 
-    const addProductInCart = useCallback(async ({ id, image, title, price, quantity, quantitySelected }: TProductCart) => {
+    const addProductInCart = useCallback(async ({ id, image, title, price, weight, dimension, quantity, quantitySelected }: TProductCart) => {
 
         //Verificar se este produto já esta no carrinho
         const isProductInCart = productsInCart.some(item => item.id === id)
@@ -44,7 +46,7 @@ export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
             return
         }
 
-        const newProduct: TProductCart = { id, image, title, price, quantity, quantitySelected }
+        const newProduct: TProductCart = { id, image, title, price, weight, dimension, quantity, quantitySelected }
 
         setProductsInCart(prevProducts => [...prevProducts, newProduct])
         toast.success('Produto adicionado ao carrinho!')

@@ -1,5 +1,6 @@
 export * from './VTextField'
 export * from './VTextFieldCPF'
+export * from './VTextFieldCEP'
 export * from './VTextFieldCellphone'
 export * from './VSelect'
 export * from './VInputFile'
