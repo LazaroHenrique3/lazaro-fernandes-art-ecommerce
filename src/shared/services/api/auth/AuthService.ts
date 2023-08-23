@@ -3,6 +3,7 @@ import { api } from '../axiosConfig'
 interface IAuth {
     name: string
     idUser: string
+    imageUser: string
     accessToken: string
     typeUser: string
     accessLevel: string
@@ -21,7 +22,7 @@ interface ErrorResponse {
 const auth = async (email: string, password: string): Promise<IAuth | Error> => {
 
     try {
-        const { data } = await api.post('/adminsignin', {email, password})
+        const { data } = await api.post('/customersignin', {email, password})
 
         if (data) {
             return data

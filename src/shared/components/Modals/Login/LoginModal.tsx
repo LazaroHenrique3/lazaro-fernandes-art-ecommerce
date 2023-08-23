@@ -30,12 +30,20 @@ const style = {
     pb: 3,
 }
 
+//Hooks personalizados
+import {
+    UseLoginCustomer
+} from './hooks'
+
 export const LoginModal = () => {
     const { formRef } = useVForm('formRef')
 
     const { openModalLogin, handleCloseModalLogin } = useNavBarContext()
 
     const [isLoading, setIsLoading] = useState(false)
+
+    //Hooks personalizados
+    const { handleLogin } = UseLoginCustomer({ setIsLoading, formRef })
 
     return (
         <div>
@@ -47,8 +55,12 @@ export const LoginModal = () => {
             >
                 <Box sx={{ ...style, width: 250 }}>
 
-                    <VForm ref={formRef} onSubmit={() => console.log('teste')}>
-                        <Box display='flex' flexDirection='column' gap={3} width={250}>
+                    <VForm ref={formRef} onSubmit={handleLogin}>
+                        {isLoading && (
+                            <LinearProgress variant='indeterminate' />
+                        )}
+
+                        <Box display='flex' flexDirection='column' gap={3} marginY={2} width={250}>
 
                             <Typography variant='h4' align='center'>
                                 LOGIN

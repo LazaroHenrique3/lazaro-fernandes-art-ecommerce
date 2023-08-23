@@ -88,7 +88,7 @@ export const Store = () => {
         <BasePageEcommerceLayout>
             <Box display='flex' flexDirection='column' alignItems='center' sx={container} component='section'>
                 <Typography variant='h2' marginTop={5} marginBottom={10} color={theme.palette.primary.light} fontWeight={800}>
-                    Loja
+                    Loja 
                 </Typography>
 
                 <ListProductsForSaleTools

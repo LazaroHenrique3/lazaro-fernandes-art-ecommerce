@@ -23,7 +23,8 @@ import {
 import {
     useAppThemeContext,
     useNavBarContext,
-    useCartContext
+    useCartContext,
+    useAuthContext
 } from '../../contexts'
 
 import { LoginModal } from '../Modals'
@@ -40,6 +41,7 @@ interface IListMenuItemProps {
 const ListMenuItem: React.FC<IListMenuItemProps> = ({ to, icon, label, onClick }) => {
     const navigate = useNavigate()
     const { toggleTheme } = useAppThemeContext()
+    const { logout } = useAuthContext()
 
     const {
         handleCloseModalLogin,
@@ -57,6 +59,7 @@ const ListMenuItem: React.FC<IListMenuItemProps> = ({ to, icon, label, onClick }
             navigate(to)
         } else {
             if (label === 'Sair') {
+                logout()
                 handleCloseModalLogin()
             } else if (label === 'Logar') {
                 handleOpenModalLogin()
@@ -78,6 +81,7 @@ const ListMenuItem: React.FC<IListMenuItemProps> = ({ to, icon, label, onClick }
 
 export const NavBar = () => {
     const { productsInCart, toggleCartIsOpen } = useCartContext()
+    const { imageUser } = useAuthContext()
 
     const {
         anchorElNav,
@@ -149,7 +153,7 @@ export const NavBar = () => {
                         </Tooltip>
                         <Tooltip title="Abrir Opções">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Sharp" src="/static/images/avatar/1.jpg" />
+                                <Avatar src={imageUser} />
                             </IconButton>
                         </Tooltip>
                         <Menu

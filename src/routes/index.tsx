@@ -63,7 +63,7 @@ export const MainRoutes = () => {
         }
 
         setSettingsOptions(settingsOptions)
-    }, [])
+    }, [isAuthenticated])
 
     return (
         <Routes>

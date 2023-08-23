@@ -3,6 +3,8 @@ import {
     Box,
     Paper,
     Typography,
+    Button,
+    Icon
 } from '@mui/material'
 
 import { Scrollbars } from 'react-custom-scrollbars-2'
@@ -26,15 +28,23 @@ const cartContainer = {
 export const Cart = () => {
     const theme = useTheme()
 
-    const { productsInCart, cartIsOpen } = useCartContext()
+    const { productsInCart, cartIsOpen, toggleCartIsOpen } = useCartContext()
 
     return (
         <>
             {cartIsOpen && (
                 <Box sx={cartContainer} component={Paper}>
-                    <Typography variant='h6' color={theme.palette.primary.light} fontWeight={800}>
-                        Seu carrinho
-                    </Typography>
+                    <Box display='flex' justifyContent='space-between' marginBottom={2}>
+                        <Typography variant='h6' color={theme.palette.primary.light} fontWeight={800}>
+                            Seu carrinho
+                        </Typography>
+
+                        <Button variant='outlined' onClick={toggleCartIsOpen}>
+                            <Icon>
+                                close
+                            </Icon>
+                        </Button>
+                    </Box>
 
                     {(productsInCart.length === 0) ? (
                         <Typography variant='h6' fontSize='15px'>

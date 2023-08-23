@@ -35,6 +35,11 @@ const style = {
     pb: 3,
 }
 
+//Hooks personalizados
+import {
+    UseRegisterCustomer
+} from './hooks'
+
 export const RegisterModal = () => {
     const theme = useTheme()
 
@@ -50,6 +55,9 @@ export const RegisterModal = () => {
         setOpen(false)
     }
 
+    //Hooks personalizados
+    const { handleSave } = UseRegisterCustomer({ setIsLoading, setOpen, formRef })
+
     return (
         <>
             <Button onClick={handleOpen}>Cadastre-se</Button>
@@ -61,7 +69,7 @@ export const RegisterModal = () => {
             >
                 <Box sx={{ ...style, maxWidth: '600px' }}>
 
-                    <VForm ref={formRef} onSubmit={() => console.log('teste')}>
+                    <VForm ref={formRef} onSubmit={handleSave}>
                         <Box margin={1} display='flex' flexDirection='column'>
 
                             <Typography variant='h4' align='center'>
@@ -81,7 +89,7 @@ export const RegisterModal = () => {
 
                                 <Grid key={'1'} container item direction='row' marginBottom={3} spacing={3}>
                                     <Grid item xs={12} >
-                                        <VInputFile label='Principal' name='main_image' isExternalLoading={isLoading} />
+                                        <VInputFile label='Principal' name='image' isExternalLoading={isLoading} />
                                     </Grid>
                                 </Grid>
 
@@ -129,10 +137,6 @@ export const RegisterModal = () => {
                                             </Grid>
 
                                             <Grid item xs={12} >
-                                                <VDateInput label='Data de nascimento' name='date_of_birth' disabled={isLoading} />
-                                            </Grid>
-
-                                            <Grid item xs={12} >
                                                 <VTextFieldCPF disabled={isLoading} />
                                             </Grid>
 
@@ -144,6 +148,9 @@ export const RegisterModal = () => {
                                                 <VTextField fullWidth label='Confirmar Senha' name='confirmPassword' type='password' disabled={isLoading} />
                                             </Grid>
 
+                                            <Grid item xs={12} >
+                                                <VDateInput label='Data de nascimento' name='date_of_birth' disabled={isLoading} />
+                                            </Grid>
                                         </Grid>
                                     </Box>
                                 </Scrollbars>
@@ -153,12 +160,16 @@ export const RegisterModal = () => {
                                         <Button
                                             type='submit'
                                             variant='contained'
-                                            onClick={handleClose}>
+                                            disabled={isLoading}
+                                            endIcon={isLoading ? <CircularProgress variant='indeterminate' color='inherit' size={20} /> : undefined}>
                                             Cadastrar
                                         </Button>
 
                                         <Button
+                                            type='submit'
                                             variant='outlined'
+                                            disabled={isLoading}
+                                            endIcon={isLoading ? <CircularProgress variant='indeterminate' color='inherit' size={20} /> : undefined}
                                             onClick={handleClose}>
                                             Cancelar
                                         </Button>

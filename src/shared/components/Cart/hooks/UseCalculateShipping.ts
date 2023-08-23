@@ -58,7 +58,7 @@ export const UseCalculateShipping = ({ setIsLoading, formRef }: IUseCalculateShi
                 length: getLargestLength(productsInCart),
                 height: getTotalHeight(productsInCart)
             }
-            console.log('Testa: ', formattedRequest)
+
             const result = await ShippingService.calculateShipping(formattedRequest)
             setIsLoading(false)
 

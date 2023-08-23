@@ -1,7 +1,9 @@
-import { 
+import {
     useState,
     useEffect
 } from 'react'
+
+import { useNavigate } from 'react-router-dom'
 
 import {
     useTheme,
@@ -14,7 +16,9 @@ import {
 } from '@mui/material'
 
 import { formattedPrice } from '../../../util'
-import { useCartContext } from '../../../contexts'
+import {
+    useCartContext,
+} from '../../../contexts'
 import { VTextFieldCEP, VForm, useVForm } from '../../../forms'
 
 //hooks personalizados
@@ -45,10 +49,13 @@ const CartSummaryLine = ({ label, value }: ICartSummaryLine) => {
 
 
 export const CartResume = () => {
+    const navigate = useNavigate()
+
     const { productsInCart } = useCartContext()
+
     const { formRef } = useVForm('formRef')
 
-    const [ isLoading, setIsLoading ] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const { shipping, calculateShipping, resetShipping } = UseCalculateShipping({ setIsLoading, formRef })
 
     useEffect(() => {
@@ -64,7 +71,7 @@ export const CartResume = () => {
             <VForm ref={formRef} onSubmit={calculateShipping}>
                 <Box width='100%' display='flex'>
                     <Box display='flex' width='100%'>
-                        <VTextFieldCEP label='Calcular Frete' size='small'/>
+                        <VTextFieldCEP label='Calcular Frete' size='small' />
 
                         <Box>
                             <Button type='submit' variant='contained' disabled={isLoading}>
@@ -87,7 +94,10 @@ export const CartResume = () => {
             <CartSummaryLine label="Total" value={(subtotal + Number(shipping.Valor.replace(',', '.')))} />
 
             <Box display='flex'>
-                <Button fullWidth disabled={(isLoading || Number(shipping.Valor.replace(',', '.')) <= 0)}
+                <Button
+                    fullWidth
+                    disabled={(isLoading || Number(shipping.Valor.replace(',', '.')) <= 0)}
+                    onClick={() => navigate('/customer/sale')}
                     variant='contained'>
                     Finalizar compra
                 </Button>
