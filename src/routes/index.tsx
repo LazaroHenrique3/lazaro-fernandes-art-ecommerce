@@ -3,9 +3,12 @@ import { useEffect } from 'react'
 
 import '../shared/services/yup/TranslationsYup'
 
+import { PrivateCustomer } from '../shared/components'
+
 import {
     useAuthContext,
-    useNavBarContext
+    useNavBarContext,
+    useDrawerContext
 } from '../shared/contexts'
 
 import {
@@ -14,12 +17,17 @@ import {
     ProductDetails,
     About,
     Contact,
+    MyAccount,
+    Orders,
+    PersonalData,
+    Adresses,
     PageNotFound,
 } from '../pages'
 
 export const MainRoutes = () => {
     const { isAuthenticated } = useAuthContext()
     const { setPagesOptions, setSettingsOptions } = useNavBarContext()
+    const { setDrawerOptions } = useDrawerContext()
 
     useEffect(() => {
         setPagesOptions([
@@ -58,23 +66,48 @@ export const MainRoutes = () => {
             settingsOptions.unshift({
                 label: 'Meu perfil',
                 icon: 'account_circle',
-                path: '/customer/profile',
+                path: '/customer/my-account',
             })
         }
 
         setSettingsOptions(settingsOptions)
+
+        setDrawerOptions([
+            {
+                label: 'Minha Conta',
+                icon: 'person',
+                path: '/customer/my-account'
+            },
+            {
+                label: 'Meus Pedidos',
+                icon: 'shopping_bag_icon',
+                path: '/customer/orders'
+            },
+            {
+                label: 'Meus Dados',
+                icon: 'contact_page_icon',
+                path: '/customer/personal-data'
+            },
+            {
+                label: 'Meus Endereços',
+                icon: 'map',
+                path: '/customer/adresses'
+            },
+        ])
     }, [isAuthenticated])
 
     return (
         <Routes>
             <Route path='/home' element={<Home />} />
-
             <Route path='/store' element={<Store />} />
             <Route path='/product/details/:id' element={<ProductDetails />} />
-
             <Route path='/about' element={<About />} />
-
             <Route path='/contact' element={<Contact />} />
+
+            <Route path='/customer/my-account' element={<PrivateCustomer><MyAccount /></PrivateCustomer>} />
+            <Route path='/customer/orders' element={<PrivateCustomer><Orders /></PrivateCustomer>} />
+            <Route path='/customer/personal-data' element={<PrivateCustomer><PersonalData /></PrivateCustomer>} />
+            <Route path='/customer/adresses' element={<PrivateCustomer><Adresses /></PrivateCustomer>} />
 
             <Route path='*' element={<PageNotFound />} />
         </Routes>

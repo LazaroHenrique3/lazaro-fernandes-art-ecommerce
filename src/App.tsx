@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import {
     AppThemeProvider,
     NavBarProvider,
+    DrawerProvider,
     AuthProvider,
     CartProvider
 } from './shared/contexts'
@@ -22,7 +23,9 @@ function App() {
                     <BrowserRouter>
 
                         <NavBarProvider>
-                            <MainRoutes />
+                            <DrawerProvider>
+                                <MainRoutes />
+                            </DrawerProvider>
                         </NavBarProvider>
 
                         <ToastContainer autoClose={5000} position={toast.POSITION.BOTTOM_LEFT} />

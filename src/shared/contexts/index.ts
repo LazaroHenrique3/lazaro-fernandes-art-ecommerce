@@ -1,4 +1,5 @@
 export * from './ThemeContext'
 export * from './NavBarContext'
+export * from  './DrawerContext'
 export * from './AuthContext'
 export * from './CartContext'

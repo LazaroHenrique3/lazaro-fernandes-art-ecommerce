@@ -2,7 +2,7 @@ import { Box, CircularProgress } from '@mui/material'
 
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../contexts'
-import { BasePageEcommerceLayout } from '../../layouts'
+import { SideNav } from '../SideNav'
 
 interface ILoginProps {
     children: React.ReactNode
@@ -23,7 +23,7 @@ export const PrivateCustomer: React.FC<ILoginProps> = ({ children }) => {
     }
 
     if (isAuthenticated && typeUser === 'customer') return (
-        <BasePageEcommerceLayout>{children}</BasePageEcommerceLayout>
+        <SideNav>{children}</SideNav>
     )
 
     navigate('/home')
