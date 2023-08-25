@@ -8,10 +8,8 @@ interface IListToolsProps {
     onChangeSearchText?: (newText: string) => void
     newButtonText?: string
     showNewButton?: boolean
-    showPDFButton?: boolean
 
     onClickNewButton?: () => void
-    onClickPDFButton?: () => void
 }
 
 export const ListTools: React.FC<IListToolsProps> = ({
@@ -20,9 +18,7 @@ export const ListTools: React.FC<IListToolsProps> = ({
     onChangeSearchText,
     newButtonText = 'Novo',
     showNewButton = true,
-    showPDFButton = true,
     onClickNewButton,
-    onClickPDFButton
 }) => {
 
     const theme = useTheme()
@@ -37,12 +33,6 @@ export const ListTools: React.FC<IListToolsProps> = ({
                 {showNewButton && (
                     <Box>
                         <Button color='primary' variant='contained' endIcon={<Icon>add</Icon>} onClick={onClickNewButton}>{newButtonText}</Button>
-                    </Box>
-                )}
-
-                {showPDFButton && (
-                    <Box>
-                        <Button color='primary' variant='outlined' endIcon={<Icon>picture_as_pdf</Icon>} onClick={onClickPDFButton}>PDF</Button>
                     </Box>
                 )}
             </Box>

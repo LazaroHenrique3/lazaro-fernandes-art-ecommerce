@@ -20,7 +20,8 @@ import {
     MyAccount,
     Orders,
     PersonalData,
-    Adresses,
+    AddressList,
+    AddressDetails,
     PageNotFound,
 } from '../pages'
 
@@ -91,7 +92,7 @@ export const MainRoutes = () => {
             {
                 label: 'Meus Endereços',
                 icon: 'map',
-                path: '/customer/adresses'
+                path: '/customer/address'
             },
         ])
     }, [isAuthenticated])
@@ -107,7 +108,8 @@ export const MainRoutes = () => {
             <Route path='/customer/my-account' element={<PrivateCustomer><MyAccount /></PrivateCustomer>} />
             <Route path='/customer/orders' element={<PrivateCustomer><Orders /></PrivateCustomer>} />
             <Route path='/customer/personal-data' element={<PrivateCustomer><PersonalData /></PrivateCustomer>} />
-            <Route path='/customer/adresses' element={<PrivateCustomer><Adresses /></PrivateCustomer>} />
+            <Route path='/customer/address' element={<PrivateCustomer><AddressList /></PrivateCustomer>} />
+            <Route path='/customer/address/details/:id' element={<PrivateCustomer><AddressDetails /></PrivateCustomer>} />
 
             <Route path='*' element={<PageNotFound />} />
         </Routes>
