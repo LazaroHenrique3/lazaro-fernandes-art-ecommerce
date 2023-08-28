@@ -79,7 +79,7 @@ export const SideNav: React.FC<IDrawerProps> = ({ children }) => {
                             src={imageUser} />
 
                         <Button variant='outlined' onClick={() => navigate('/customer/personal-data')} startIcon={<Icon>account_circle_icon</Icon>}>
-                            {name}
+                            {name?.split(' ')[0]}
                         </Button>
                     </Box>
 

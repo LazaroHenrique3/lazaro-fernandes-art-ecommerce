@@ -19,7 +19,7 @@ import {
     Contact,
     MyAccount,
     Orders,
-    PersonalData,
+    CustomerDetails,
     AddressList,
     AddressDetails,
     PageNotFound,
@@ -107,7 +107,7 @@ export const MainRoutes = () => {
 
             <Route path='/customer/my-account' element={<PrivateCustomer><MyAccount /></PrivateCustomer>} />
             <Route path='/customer/orders' element={<PrivateCustomer><Orders /></PrivateCustomer>} />
-            <Route path='/customer/personal-data' element={<PrivateCustomer><PersonalData /></PrivateCustomer>} />
+            <Route path='/customer/personal-data' element={<PrivateCustomer><CustomerDetails /></PrivateCustomer>} />
             <Route path='/customer/address' element={<PrivateCustomer><AddressList /></PrivateCustomer>} />
             <Route path='/customer/address/details/:id' element={<PrivateCustomer><AddressDetails /></PrivateCustomer>} />
 

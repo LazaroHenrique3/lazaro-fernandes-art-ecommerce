@@ -19,6 +19,7 @@ interface IAuthContextData {
     typeUser?: string
     accessLevel?: string
     handleName: (name: string) => void
+    handleImage: (image: string) => void
     logout: () => void
     login: (email: string, password: string) => Promise<string | void>
 }
@@ -127,6 +128,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
             idUser,
             accessLevel,
             handleName: setName,
+            handleImage: setUserImage,
             login: handleLogin,
             logout: handleLogout
         }}>

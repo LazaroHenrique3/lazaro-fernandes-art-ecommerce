@@ -18,6 +18,7 @@ import { BasePagePrivateLayout } from '../../../shared/layouts'
 import { IListAddress } from '../../../shared/services/api/address/AddressService'
 import { ListTools } from '../../../shared/components' 
 import { Environment } from '../../../shared/environment'
+import { formatCEP } from './util/formatFunction'
 
 import {
     StyledTableCell,
@@ -102,7 +103,7 @@ export const AddressList = () => {
                                 <StyledTableCell size='small'>{row.city}</StyledTableCell>
                                 <StyledTableCell size='small'>{row.state}</StyledTableCell>
                                 <StyledTableCell size='small'>{row.number}</StyledTableCell>
-                                <StyledTableCell size='small'>{row.cep}</StyledTableCell>
+                                <StyledTableCell size='small'>{formatCEP(row.cep)}</StyledTableCell>
                                 <StyledTableCell size='small'>{row?.complement}</StyledTableCell>
                                 <StyledTableCell size='small'>{row.neighborhood}</StyledTableCell>
                                 <StyledTableCell size='small'>{row.street}</StyledTableCell>
