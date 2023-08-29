@@ -17,9 +17,16 @@ import {
 
 import { formattedPrice } from '../../../util'
 import {
+    useAuthContext,
     useCartContext,
+    useNavBarContext,
 } from '../../../contexts'
-import { VTextFieldCEP, VForm, useVForm } from '../../../forms'
+
+import { 
+    VTextFieldCEP, 
+    VForm, 
+    useVForm 
+} from '../../../forms'
 
 //hooks personalizados
 import {
@@ -50,6 +57,8 @@ const CartSummaryLine = ({ label, value }: ICartSummaryLine) => {
 
 export const CartResume = () => {
     const navigate = useNavigate()
+    const { isAuthenticated} = useAuthContext()
+    const { handleOpenModalLogin } = useNavBarContext()
 
     const { productsInCart } = useCartContext()
 
@@ -57,6 +66,15 @@ export const CartResume = () => {
 
     const [isLoading, setIsLoading] = useState(false)
     const { shipping, calculateShipping, resetShipping } = UseCalculateShipping({ setIsLoading, formRef })
+
+    const handleCheckout = () => {
+        if(isAuthenticated){
+            navigate('/customer/checkout')
+            return
+        } 
+        
+        handleOpenModalLogin()
+    }
 
     useEffect(() => {
         resetShipping()
@@ -97,7 +115,7 @@ export const CartResume = () => {
                 <Button
                     fullWidth
                     disabled={(isLoading || Number(shipping.Valor.replace(',', '.')) <= 0)}
-                    onClick={() => navigate('/customer/sale')}
+                    onClick={handleCheckout}
                     variant='contained'>
                     Finalizar compra
                 </Button>
