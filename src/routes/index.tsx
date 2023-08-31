@@ -22,6 +22,7 @@ import {
     CustomerDetails,
     AddressList,
     AddressDetails,
+    Checkout,
     PageNotFound,
 } from '../pages'
 
@@ -110,6 +111,7 @@ export const MainRoutes = () => {
             <Route path='/customer/personal-data' element={<PrivateCustomer><CustomerDetails /></PrivateCustomer>} />
             <Route path='/customer/address' element={<PrivateCustomer><AddressList /></PrivateCustomer>} />
             <Route path='/customer/address/details/:id' element={<PrivateCustomer><AddressDetails /></PrivateCustomer>} />
+            <Route path='/customer/checkout' element={<PrivateCustomer><Checkout /></PrivateCustomer>} />
 
             <Route path='*' element={<PageNotFound />} />
         </Routes>
