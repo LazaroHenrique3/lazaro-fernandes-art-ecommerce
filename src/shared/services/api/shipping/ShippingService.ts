@@ -33,7 +33,7 @@ interface ErrorResponse {
     }
 }
 
-const calculateShipping = async (consultData: ICalculateShipping): Promise<IPrecoPrazoResponse | Error> => {
+const calculateShipping = async (consultData: ICalculateShipping): Promise<IPrecoPrazoResponse[] | Error> => {
     try {
         const { data } = await api.post('/shipping/calculateshipping', consultData)
 

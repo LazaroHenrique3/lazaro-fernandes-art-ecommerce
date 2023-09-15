@@ -95,7 +95,7 @@ export const SideNav: React.FC<IDrawerProps> = ({ children }) => {
 
                     <Box>
                         <List component="nav">
-                            <ListItemButton onClick={() => navigate('/home')}>
+                            <ListItemButton onClick={() => navigate('/store')}>
                                 <ListItemIcon>
                                     <Icon>
                                         store

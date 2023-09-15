@@ -23,8 +23,13 @@ import {
     UseFetchAddressData
 } from '../hooks'
 
+interface ISelectAddressFunctionProps {
+    idAddress: string
+    selectedAddressCep: string
+}
+
 interface IAddressSelectProps {
-    setAddress: (idAddress: string) => void
+    setAddress: ({ idAddress, selectedAddressCep }: ISelectAddressFunctionProps) => void
     selectedAddress: string
 }
 

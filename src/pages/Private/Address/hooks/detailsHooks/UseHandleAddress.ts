@@ -43,8 +43,6 @@ export const UseHandleAddress = ({ setIsLoading, setName, formRef, id }: IUseHan
                 return
             }
 
-            console.log('InfoCep: ', result)
-
             formRef.current?.setData({
                 cep: result.cep,
                 city: result.localidade,

@@ -1,4 +1,5 @@
 import {
+    useTheme,
     Grid,
     Button,
     Card,
@@ -20,6 +21,11 @@ const InfoAddress: React.FC<IInfoAddressProps> = ({ label, value }) => (
     </Typography>
 )
 
+interface ISelectAddressFunctionProps {
+    idAddress: string
+    selectedAddressCep: string
+}
+
 interface IAddressSelectCardProps {
     id: number
     street: string
@@ -29,14 +35,15 @@ interface IAddressSelectCardProps {
     cep: string
     neighborhood: string
     selected: boolean
-    handleAddress: (idAddress: string) => void
+    handleAddress: ({ idAddress, selectedAddressCep }: ISelectAddressFunctionProps) => void
 }
 
 export const AddressSelectCard: React.FC<IAddressSelectCardProps> = ({ id, street, number, city, state, cep, neighborhood, selected, handleAddress }) => {
+    const theme = useTheme()
 
     return (
         <Grid container item xs={12} sm={6} lg={4} xl={3} justifyContent='center'>
-            <Card sx={{ width: 260 }}>
+            <Card sx={{ width: 260, border: (selected ? `solid 1px ${theme.palette.primary.light}` : '') }}>
                 <CardContent>
                     <InfoAddress label='Logradouro' value={street} />
                     <InfoAddress label='Número' value={number} />
@@ -45,7 +52,7 @@ export const AddressSelectCard: React.FC<IAddressSelectCardProps> = ({ id, stree
                     <InfoAddress label='CEP' value={formatCEP(cep)} />
                     <InfoAddress label='Bairro' value={neighborhood} />
                 </CardContent>
-                <CardActions onClick={() => handleAddress(String(id))}>
+                <CardActions onClick={() => handleAddress({ idAddress: String(id), selectedAddressCep: cep })}>
                     <Button variant={(selected ? 'contained' : 'outlined')} size="small">
                         {(selected ? 'Selecionado' : 'Entregar aqui')}
                     </Button>

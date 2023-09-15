@@ -14,11 +14,16 @@ import {
 
 const steps = ['END. ENTREGA', 'MÉT. ENVIO', 'FORMA PAGAMENTO']
 
-interface ICheckoutStepper {
-    setSelectedStep: (step: number) => void
+interface IStepsCompleted {
+    [stepNumber: number]: boolean;
 }
 
-export const CheckoutStepper: React.FC<ICheckoutStepper> = ({ setSelectedStep }) => {
+interface ICheckoutStepperProps {
+    setSelectedStep: (step: number) => void
+    stepsCompleted: IStepsCompleted
+}
+
+export const CheckoutStepper: React.FC<ICheckoutStepperProps> = ({ setSelectedStep, stepsCompleted }) => {
     const [activeStep, setActiveStep] = useState(0)
     const [skipped, setSkipped] = useState(new Set<number>())
 
@@ -75,7 +80,7 @@ export const CheckoutStepper: React.FC<ICheckoutStepper> = ({ setSelectedStep })
                     </Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                         <Box sx={{ flex: '1 1 auto' }} />
-                        <Button onClick={handleReset}>Concluir Compra</Button>
+                        <Button onClick={handleReset}>Refazer Tudo</Button>
                     </Box>
                 </>
             ) : (
@@ -91,7 +96,10 @@ export const CheckoutStepper: React.FC<ICheckoutStepper> = ({ setSelectedStep })
                             Voltar
                         </Button>
                         <Box sx={{ flex: '1 1 auto' }} />
-                        <Button variant='contained' onClick={handleNext}>
+                        <Button 
+                            variant='contained' 
+                            disabled={!stepsCompleted[activeStep]}
+                            onClick={handleNext}>
                             {activeStep === steps.length - 1 ? 'Finalizar' : 'Próximo'}
                         </Button>
                     </Box>

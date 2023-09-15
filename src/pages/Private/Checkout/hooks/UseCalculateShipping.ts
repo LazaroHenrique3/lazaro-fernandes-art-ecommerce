@@ -1,58 +1,27 @@
-import { useState } from 'react'
-
-import * as yup from 'yup'
-import { FormHandles } from '@unform/core'
-
-import { IVFormErrors } from '../../../../shared/forms'
-
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import {
-    IFormData,
-    formatValidationSchema
-} from '../validation/Schema'
 
-import { TProductCart, useCartContext } from '../../../contexts'
+import { TProductCart, useCartContext  } from '../../../../shared/contexts'
 
 import {
-    IPrecoPrazoResponse,
     ShippingService
-} from '../../../services/api/shipping/ShippingService'
+} from '../../../.././shared/services/api/shipping/ShippingService'
 
 interface IUseCalculateShippingProps {
     setIsLoading: (status: boolean) => void
-    formRef: React.RefObject<FormHandles>
 }
 
-const INITIAL_VALUES = {
-    Codigo: '0',
-    Valor: '0',
-    PrazoEntrega: '0',
-    ValorSemAdicionais: '0',
-    ValorMaoPropria: '0',
-    ValorAvisoRecebimento: '0',
-    ValorDeclarado: '0',
-    EntregaDomiciliar: '0',
-    EntregaSabado: '0',
-    obsFim: '0',
-    Erro: '0',
-    MsgErro: '0'
-}
-
-export const UseCalculateShipping = ({ setIsLoading, formRef }: IUseCalculateShippingProps) => {
+export const UseCalculateShipping = ({ setIsLoading }: IUseCalculateShippingProps) => {
     const { productsInCart } = useCartContext()
 
-    const [shipping, setShipping] = useState<IPrecoPrazoResponse>(INITIAL_VALUES)
-
-    const calculateShipping = async (data: IFormData) => {
+    const calculateShipping = async (cep: string) => {
         try {
-            const cep = data.cep.replace(/[^\w]/g, '')
-            const validateData = await formatValidationSchema.validate({ cep }, { abortEarly: false })
+            const formattedCep = cep.replace(/[^\w]/g, '')
             setIsLoading(true)
 
             const formattedRequest = {
-                cep: validateData.cep,
+                cep: formattedCep,
                 weight: getTotalWeightInKilograms(productsInCart),
                 width: getLargestWidth(productsInCart),
                 length: getLargestLength(productsInCart),
@@ -67,26 +36,14 @@ export const UseCalculateShipping = ({ setIsLoading, formRef }: IUseCalculateShi
                 return
             }
 
-            setShipping(result[0])
-        } catch (errors) {
-            const errorsYup: yup.ValidationError = errors as yup.ValidationError
-
-            const validationErrors: IVFormErrors = {}
-
-            errorsYup.inner.forEach(error => {
-                if (!error.path) return
-
-                validationErrors[error.path] = error.message
-                formRef.current?.setErrors(validationErrors)
-            })
+            return result
+        } catch (error) {
+            toast.error('Houve um erro ao consultar o frete!')
+            console.error(error)
         }
     }
 
-    const resetShipping = () => {
-        setShipping(INITIAL_VALUES)
-    }
-
-    return { shipping, calculateShipping, resetShipping }
+    return { calculateShipping }
 
 }
 
