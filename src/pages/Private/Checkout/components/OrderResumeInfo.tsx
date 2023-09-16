@@ -33,9 +33,14 @@ const CartSummaryLine = ({ label, value }: ICartSummaryLine) => {
 interface IOrderResumeInfoProps {
     selectedShippingPrice: number
     selectedShippingMethod: string
+    handleCompletePurchase: () => void
 }
 
-export const OrderResumeInfo: React.FC<IOrderResumeInfoProps> = ({ selectedShippingPrice, selectedShippingMethod }) => {
+export const OrderResumeInfo: React.FC<IOrderResumeInfoProps> = ({
+    selectedShippingPrice,
+    selectedShippingMethod,
+    handleCompletePurchase
+}) => {
     const { productsInCart } = useCartContext()
 
     const subtotal = productsInCart.reduce((acc, product) => {
@@ -52,7 +57,8 @@ export const OrderResumeInfo: React.FC<IOrderResumeInfoProps> = ({ selectedShipp
             <Box display='flex'>
                 <Button
                     fullWidth
-                    variant='contained'>
+                    variant='contained'
+                    onClick={() => handleCompletePurchase()}>
                     Concluir compra
                 </Button>
             </Box>

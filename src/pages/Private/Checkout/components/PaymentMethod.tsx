@@ -11,8 +11,13 @@ import {
     FormLabel,
 } from '@mui/material'
 
+import { 
+    TSalePaymentMethods 
+} from '../../../../shared/services/api/sales/SaleService'
+
+
 interface IPaymentMethodProps {
-    setPaymentMethod: (paymentMethoD: string) => void
+    setPaymentMethod: (paymentMethoD: TSalePaymentMethods) => void
     selectedPaymentMethod: string
 }
 
@@ -37,7 +42,7 @@ export const PaymentMethod: React.FC<IPaymentMethodProps> = ({ setPaymentMethod,
                                     aria-labelledby="demo-controlled-radio-buttons-group"
                                     name="controlled-radio-buttons-group"
                                     value={selectedPaymentMethod}
-                                    onChange={(e) => setPaymentMethod(e.target.value)}
+                                    onChange={(e) => setPaymentMethod(e.target.value as TSalePaymentMethods)}
                                 >
                                     <FormControlLabel value="PIX" control={<Radio />} label="PIX" />
                                     <FormControlLabel value="BOLETO" control={<Radio />} label="BOLETO" />

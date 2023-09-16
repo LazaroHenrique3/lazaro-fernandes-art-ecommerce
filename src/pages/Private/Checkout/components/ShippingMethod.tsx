@@ -25,6 +25,10 @@ import {
     UseCalculateShipping
 } from '../hooks'
 
+import { 
+    TSaleShippingMethods
+} from '../../../../shared/services/api/sales/SaleService'
+
 interface IShippingInformationLine {
     label: string,
     value: number | string
@@ -47,15 +51,17 @@ const ShippingInformationLine = ({ label, value }: IShippingInformationLine) => 
 }
 
 interface IShippingMethodProps {
-    setShippingMethod: (shippingMethod: 'PAC' | 'SEDEX') => void
+    setShippingMethod: (shippingMethod: TSaleShippingMethods) => void
     setSelectedShippingPrice: (price: number) => void
-    selectedShippingMethod: 'PAC' | 'SEDEX'
+    setEstimatedDeliveryDate: (date: string) => void
+    selectedShippingMethod: TSaleShippingMethods
     selectedShippingCep: string
 }
 
 export const ShippingMethod: React.FC<IShippingMethodProps> = ({
     setShippingMethod,
     setSelectedShippingPrice,
+    setEstimatedDeliveryDate,
     selectedShippingMethod,
     selectedShippingCep
 }) => {
@@ -91,6 +97,7 @@ export const ShippingMethod: React.FC<IShippingMethodProps> = ({
 
                 if (selectedShippingMethod === 'PAC') {
                     setSelectedShippingPrice(Number(shippingPricePac))
+                    setEstimatedDeliveryDate(formattedDeadlinePac)
                 }
             }
 
@@ -100,12 +107,14 @@ export const ShippingMethod: React.FC<IShippingMethodProps> = ({
 
     }, [selectedShippingCep])
 
-    const handleChangeShippingMethod = (method: string) => {
-        const shippingMethod = method as 'PAC' | 'SEDEX'
+    const handleChangeShippingMethod = (method: TSaleShippingMethods) => {
+        const shippingMethod = method
         const shippingValue = (method === 'PAC') ? Number(infoShippingPac.price) : Number(infoShippingSedex.price)
+        const estimatedDeliveryDate = (method === 'PAC') ? showFormattedDataString(infoShippingPac.deadline, 'en') : showFormattedDataString(infoShippingSedex.deadline, 'en')
 
         setShippingMethod(shippingMethod)
         setSelectedShippingPrice(shippingValue)
+        setEstimatedDeliveryDate(estimatedDeliveryDate)
     }
 
     return (
@@ -127,7 +136,7 @@ export const ShippingMethod: React.FC<IShippingMethodProps> = ({
                                     aria-labelledby="demo-controlled-radio-buttons-group"
                                     name="controlled-radio-buttons-group"
                                     value={selectedShippingMethod}
-                                    onChange={(e) => handleChangeShippingMethod(e.target.value)}
+                                    onChange={(e) => handleChangeShippingMethod(e.target.value as TSaleShippingMethods)}
                                 >
                                     <FormControlLabel value="PAC" control={<Radio />} label="PAC" />
                                     <FormControlLabel value="SEDEX" control={<Radio />} label="SEDEX" />
@@ -141,11 +150,15 @@ export const ShippingMethod: React.FC<IShippingMethodProps> = ({
                                     <Box display='flex' flexDirection='column'>
                                         <ShippingInformationLine
                                             label={'Valor'}
-                                            value={(selectedShippingMethod === 'PAC') ? Number(infoShippingPac.price) : Number(infoShippingSedex.price)} />
+                                            value={(selectedShippingMethod === 'PAC') ?
+                                                Number(infoShippingPac.price) :
+                                                Number(infoShippingSedex.price)} />
 
                                         <ShippingInformationLine
                                             label={'Entrega'}
-                                            value={(selectedShippingMethod === 'PAC') ? showFormattedData(infoShippingPac.deadline) : showFormattedData(infoShippingSedex.deadline)} />
+                                            value={(selectedShippingMethod === 'PAC') ?
+                                                showFormattedDataString(infoShippingPac.deadline) :
+                                                showFormattedDataString(infoShippingSedex.deadline)} />
                                     </Box>
                                 )}
                             </Box>
@@ -158,19 +171,20 @@ export const ShippingMethod: React.FC<IShippingMethodProps> = ({
     )
 }
 
-const formatDate = (date: Date) => {
+const formatDate = (date: Date): string => {
     const year = date.getFullYear()
     const month = (date.getMonth() + 1).toString().padStart(2, '0')
     const day = date.getDate().toString().padStart(2, '0')
     return `${year}-${month}-${day}`
 }
 
-function showFormattedData(date: string) {
+function showFormattedDataString(date: string, typeFormatation: 'pt' | 'en' = 'pt'): string {
     const parts = date.split('-')
     if (parts.length !== 3) {
         return 'Data inválida'
     }
 
     const [year, month, day] = parts
-    return `${day}/${month}/${year}`
+
+    return (typeFormatation === 'pt') ? `${day}/${month}/${year}` : `${year}-${month}-${day}`
 }

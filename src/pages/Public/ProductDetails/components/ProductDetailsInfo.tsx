@@ -51,37 +51,41 @@ export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) =
                     </Typography>
                 </InfoSection>
 
-                <Box width='80px'>
-                    <TextField
-                        type='number'
-                        value={qtdSelectedProducts}
-                        onChange={(e) => setQtdSelectedProducts(Number(e.target.value))}
-                        variant="outlined"
-                        size='small'
-                        InputProps={{
-                            inputProps: {
-                                min: 1,
-                                max: product.quantity
-                            },
-                        }} />
-                </Box>
+                {(product.status !== 'Vendido') &&
+                    <Box width='80px'>
+                        <TextField
+                            type='number'
+                            value={qtdSelectedProducts}
+                            onChange={(e) => setQtdSelectedProducts(Number(e.target.value))}
+                            variant="outlined"
+                            size='small'
+                            InputProps={{
+                                inputProps: {
+                                    min: 1,
+                                    max: product.quantity
+                                },
+                            }} />
+                    </Box>
+                }
 
                 <Box display='flex' gap={2}>
-                    <Button
-                        variant='contained'
-                        endIcon={<Icon>add_shopping_cart_icon</Icon>}
-                        onClick={() => addProductInCart({
-                            id: product.id,
-                            title: product.title,
-                            image: product.main_image,
-                            price: product.price,
-                            weight: product.weight,
-                            dimension: product.dimension_name,
-                            quantity: product.quantity,
-                            quantitySelected: qtdSelectedProducts
-                        })}>
-                        Adicionar ao carrinho
-                    </Button>
+                    {(product.status !== 'Vendido') &&
+                        <Button
+                            variant='contained'
+                            endIcon={<Icon>add_shopping_cart_icon</Icon>}
+                            onClick={() => addProductInCart({
+                                id: product.id,
+                                title: product.title,
+                                image: product.main_image,
+                                price: product.price,
+                                weight: product.weight,
+                                dimension: product.dimension_name,
+                                quantity: product.quantity,
+                                quantitySelected: qtdSelectedProducts
+                            })}>
+                            Adicionar ao carrinho
+                        </Button>
+                    }
 
                     <Button
                         variant='outlined'
@@ -92,6 +96,6 @@ export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) =
                     </Button>
                 </Box>
             </Box>
-        </Grid>
+        </Grid >
     )
 }

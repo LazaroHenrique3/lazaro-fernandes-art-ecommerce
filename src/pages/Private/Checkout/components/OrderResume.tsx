@@ -14,9 +14,14 @@ import { OrderResumeInfo } from './OrderResumeInfo'
 interface IOrderResumeProps {
     selectedShippingPrice: number
     selectedShippingMethod: string
+    handleCompletePurchase: () => void
 }
 
-export const OrderResume: React.FC<IOrderResumeProps> = ({ selectedShippingPrice, selectedShippingMethod }) => {
+export const OrderResume: React.FC<IOrderResumeProps> = ({
+    selectedShippingPrice, 
+    selectedShippingMethod, 
+    handleCompletePurchase
+}) => {
     const theme = useTheme()
 
     const { productsInCart } = useCartContext()
@@ -59,9 +64,10 @@ export const OrderResume: React.FC<IOrderResumeProps> = ({ selectedShippingPrice
                 </Box>}
             </Scrollbars>
 
-            <OrderResumeInfo 
-                selectedShippingPrice={selectedShippingPrice} 
-                selectedShippingMethod={selectedShippingMethod} />
+            <OrderResumeInfo
+                selectedShippingPrice={selectedShippingPrice}
+                selectedShippingMethod={selectedShippingMethod}
+                handleCompletePurchase={handleCompletePurchase} />
         </Box>
     )
 }

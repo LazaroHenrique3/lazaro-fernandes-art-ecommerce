@@ -26,6 +26,7 @@ interface ICartContextData {
     removeProductFromCart: (idProduct: number) => void
     updateProductQuantityFromCart: (idProduct: number, newQuantity: number) => void
     toggleCartIsOpen: () => void
+    resetCart: () => void
 }
 
 const CartContext = createContext({} as ICartContextData)
@@ -53,7 +54,7 @@ export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
 
     }, [productsInCart])
 
-    const updateProductQuantityFromCart = useCallback((idProduct: number, newQuantity: number) => {
+    const updateProductQuantityFromCart = useCallback((idProduct: number, newQuantity: number): void => {
 
         // Encontre o produto correspondente pelo id no estado do carrinho
         const updatedProducts = productsInCart.map(product => {
@@ -84,6 +85,13 @@ export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
 
     }, [cartIsOpen])
 
+    const resetCart = useCallback(() => { 
+
+        setProductsInCart([])
+        setCartIsOpen(false)
+
+    }, [])
+
     return (
         <CartContext.Provider value={{
             cartIsOpen,
@@ -91,7 +99,8 @@ export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
             addProductInCart,
             removeProductFromCart,
             updateProductQuantityFromCart,
-            toggleCartIsOpen
+            toggleCartIsOpen,
+            resetCart
         }}>
             {children}
         </CartContext.Provider>
