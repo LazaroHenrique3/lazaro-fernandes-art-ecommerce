@@ -3,7 +3,10 @@ import {
     useState
 } from 'react'
 
-import { useSearchParams } from 'react-router-dom'
+import { 
+    useSearchParams,
+    useNavigate
+} from 'react-router-dom'
 
 import {
     Box,
@@ -11,6 +14,8 @@ import {
     Typography,
     Pagination,
     LinearProgress,
+    Button,
+    Icon,
     TextField
 } from '@mui/material'
 
@@ -34,6 +39,8 @@ interface IAddressSelectProps {
 }
 
 export const AddressSelect: React.FC<IAddressSelectProps> = ({ setAddress, selectedAddress }) => {
+    const navigate = useNavigate()
+
     const [searchParams, setSearchParams] = useSearchParams()
 
     const [rows, setRows] = useState<IListAddress[]>([])
@@ -61,8 +68,17 @@ export const AddressSelect: React.FC<IAddressSelectProps> = ({ setAddress, selec
     return (
         <Box width='100%' marginY={3}>
             <Box width='100%' marginBottom={2} gap={1} display='flex' justifyContent='space-between'>
-                <Box marginLeft={5}>
-                    <Typography variant='h6' noWrap textOverflow='ellipsis'>Selecione</Typography>
+                <Box display='flex' gap={1}>
+                    <Box marginLeft={5}>
+                        <Typography variant='h6' noWrap textOverflow='ellipsis'>Selecione</Typography>
+                    </Box>
+
+                    <Button 
+                        variant='contained' size='small' 
+                        endIcon={<Icon>map</Icon>}
+                        onClick={() => navigate('/customer/address/details/new')}>
+                        Novo
+                    </Button>
                 </Box>
 
                 <Box marginRight={5}>

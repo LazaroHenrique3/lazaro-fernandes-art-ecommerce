@@ -5,6 +5,7 @@ import { IListAddress } from '.././address/AddressService'
 
 export type TSalePaymentMethods = 'PIX' | 'BOLETO' | 'C. CREDITO' | 'C.DEBITO'
 export type TSaleShippingMethods = 'PAC' | 'SEDEX'
+export type TSaleStatus = 'Ag. Pagamento' | 'Em preparação' | 'Enviado' | 'Cancelada' | 'Concluída'
 
 export interface ISaleItems {
     idProduct: number
@@ -14,7 +15,7 @@ export interface ISaleItems {
 
 export interface IDetailSale {
     id: number
-    status: 'Ag. Pagamento' | 'Em preparação' | 'Enviado' | 'Cancelada' | 'Concluída'
+    status: TSaleStatus
     order_date: Date | string
     estimated_delivery_date: Date | string
     payment_due_date: Date | string
@@ -37,9 +38,9 @@ export interface ISaleItemsList {
     product_title: string
 }
 
-export interface ISaleList {
+export interface ISaleListById {
     id: number
-    status: 'Ag. Pagamento' | 'Em preparação' | 'Enviado' | 'Cancelada' | 'Concluída'
+    status: TSaleStatus
     order_date: Date | string
     estimated_delivery_date: Date | string
     payment_due_date: Date | string
@@ -54,8 +55,25 @@ export interface ISaleList {
     sale_address: IListAddress
 }
 
+export interface ISaleListAll {
+    id: number
+    status: 'Ag. Pagamento' | 'Em preparação' | 'Enviado' | 'Cancelada' | 'Concluída'
+    order_date: Date | string
+    estimated_delivery_date: Date | string
+    payment_due_date: Date | string
+    payment_method: 'PIX' | 'BOLETO' | 'C. CREDITO' | 'C. DEBITO'
+    shipping_method: 'PAC' | 'SEDEX'
+    payment_received_date?: Date | string
+    delivery_date?: Date | string
+    shipping_cost: number
+    customer_id: number
+    address_id: number
+    customer_name: string
+    total: number
+}
+
 type ISaleTotalCount = {
-    data: ISaleList[],
+    data: ISaleListAll[],
     totalCount: number
 }
 
@@ -96,7 +114,7 @@ const getAll = async (page = 1, filter = '', idCustomer: number, id?: number): P
     }
 }
 
-const getById = async (idCustomer: number, idSale: number): Promise<ISaleList | Error> => {
+const getById = async (idCustomer: number, idSale: number): Promise<ISaleListById | Error> => {
 
     try {
         const { data } = await api.get(`/sale/${idCustomer}/${idSale}`)
@@ -115,8 +133,8 @@ const getById = async (idCustomer: number, idSale: number): Promise<ISaleList | 
 }
 
 const create = async (
-    idCustomer: number, 
-    idAddress: number, 
+    idCustomer: number,
+    idAddress: number,
     createData: Omit<IDetailSale, 'id' | 'status' | 'order_date' | 'payment_due_date' | 'payment_received_date' | 'delivery_date' | 'customer_id' | 'address_id'>
 ): Promise<number | Error> => {
 
@@ -136,10 +154,23 @@ const create = async (
     }
 }
 
+const cancelSale = async (idCustomer: number, idSale: number) => {
+
+    try {
+        await api.put(`/sale/cancel/${idCustomer}/${idSale}`)
+    } catch (error) {
+        console.error(error)
+        return new Error((error as ErrorResponse).response?.data?.errors?.default || 'Erro ao cancelar pedido.')
+
+    }
+
+}
+
 export const SaleService = {
     getAll,
     getById,
     create,
+    cancelSale
 }
 
 
