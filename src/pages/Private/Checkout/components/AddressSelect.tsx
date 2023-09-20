@@ -5,7 +5,6 @@ import {
 
 import { 
     useSearchParams,
-    useNavigate
 } from 'react-router-dom'
 
 import {
@@ -14,11 +13,10 @@ import {
     Typography,
     Pagination,
     LinearProgress,
-    Button,
-    Icon,
     TextField
 } from '@mui/material'
 
+import { NewAddressModal } from '../../../../shared/components/Modals' 
 import { AddressSelectCard } from './AddressSelectCard'
 import { IListAddress } from '../../../../shared/services/api/address/AddressService'
 import { Environment } from '../../../../shared/environment'
@@ -39,7 +37,6 @@ interface IAddressSelectProps {
 }
 
 export const AddressSelect: React.FC<IAddressSelectProps> = ({ setAddress, selectedAddress }) => {
-    const navigate = useNavigate()
 
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -73,12 +70,7 @@ export const AddressSelect: React.FC<IAddressSelectProps> = ({ setAddress, selec
                         <Typography variant='h6' noWrap textOverflow='ellipsis'>Selecione</Typography>
                     </Box>
 
-                    <Button 
-                        variant='contained' size='small' 
-                        endIcon={<Icon>map</Icon>}
-                        onClick={() => navigate('/customer/address/details/new')}>
-                        Novo
-                    </Button>
+                    <NewAddressModal addresses={rows} updateAddressesList={setRows}/>
                 </Box>
 
                 <Box marginRight={5}>
