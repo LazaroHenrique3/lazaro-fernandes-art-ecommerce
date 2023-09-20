@@ -24,6 +24,13 @@ export interface IDetailCustomerUpdate {
     cpf: string
 }
 
+export interface IRedefineCustomer {
+    email: string
+    verification_token: string
+    password: string
+    confirmPassword: string
+}
+
 interface ErrorResponse {
     response: {
         data?: {
@@ -130,6 +137,29 @@ const deleteCustomerImage = async(idCustomer: number): Promise<void | Error> => 
 
 }
 
+const forgotPassword = async (email: string): Promise<AxiosResponse<string> | Error> => {
+
+    try {
+        const result: AxiosResponse<string> = await api.post('/customer/forgotpassword', {email})
+        return result
+    } catch (error) {
+        console.error(error)
+        return new Error((error as ErrorResponse).response?.data?.errors?.default || 'Houve um erro inesperado.')
+    }
+
+}
+
+const redefinePassword = async (redefineData: IRedefineCustomer): Promise<void | Error> => {
+
+    try {
+        await api.post('/customer/redefinepassword', redefineData)
+    } catch (error) {
+        console.error(error)
+        return new Error((error as ErrorResponse).response?.data?.errors?.default || 'Erro ao deletar registro.')
+    }
+
+}
+
 export const CustomerService = {
     getById,
     create,
@@ -138,4 +168,6 @@ export const CustomerService = {
     updateCustomerImage,
     deleteById,
     deleteCustomerImage,
+    forgotPassword,
+    redefinePassword
 }

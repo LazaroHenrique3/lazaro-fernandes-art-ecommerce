@@ -1,11 +1,13 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
     Box,
     Modal,
     Button,
     Typography,
     CircularProgress,
-    LinearProgress
+    LinearProgress,
+    Link
 } from '@mui/material'
 
 import {
@@ -36,6 +38,8 @@ import {
 } from './hooks'
 
 export const LoginModal = () => {
+    const navigate = useNavigate()
+
     const { formRef } = useVForm('formRef')
 
     const { openModalLogin, handleCloseModalLogin } = useNavBarContext()
@@ -79,6 +83,13 @@ export const LoginModal = () => {
                             </Button>
                         </Box>
                     </VForm>
+
+
+                    <Box width='100%' display='flex' justifyContent='center' mb={1}>
+                        <Link variant="body2" onClick={() => navigate('/customer/forgot-password')}>
+                            Esqueci minha senha
+                        </Link>
+                    </Box>
 
                     <RegisterModal />
                 </Box>

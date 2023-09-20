@@ -25,6 +25,8 @@ import {
     AddressDetails,
     Checkout,
     PageNotFound,
+    ForgotPassword,
+    RedefinePassword
 } from '../pages'
 
 export const MainRoutes = () => {
@@ -106,6 +108,8 @@ export const MainRoutes = () => {
             <Route path='/product/details/:id' element={<ProductDetails />} />
             <Route path='/about' element={<About />} />
             <Route path='/contact' element={<Contact />} />
+            <Route path='/customer/forgot-password' element={<ForgotPassword />} />
+            <Route path='/customer/redefine-password/:email' element={<RedefinePassword />} />
 
             <Route path='/customer/my-account' element={<PrivateCustomer><MyAccount /></PrivateCustomer>} />
             <Route path='/customer/orders' element={<PrivateCustomer><SaleList /></PrivateCustomer>} />
