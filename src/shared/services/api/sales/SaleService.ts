@@ -53,6 +53,8 @@ export interface ISaleListById {
     address_id: number
     sale_items: ISaleItemsList[]
     sale_address: IListAddress
+    customer_name: string,
+    total: number
 }
 
 export interface ISaleListAll {
@@ -166,11 +168,39 @@ const cancelSale = async (idCustomer: number, idSale: number) => {
 
 }
 
+const paySale = async (idCustomer: number, idSale: number) => {
+
+    try {
+        await api.put(`/sale/pay/${idCustomer}/${idSale}`)
+    } catch (error) {
+        console.error(error)
+        return new Error((error as ErrorResponse).response?.data?.errors?.default || 'Erro ao pagar pedido.')
+
+    }
+
+}
+
+const concludeSale = async (idCustomer: number, idSale: number) => {
+
+    try {
+        await api.put(`/sale/concluded/${idCustomer}/${idSale}`)
+    } catch (error) {
+        console.error(error)
+        return new Error((error as ErrorResponse).response?.data?.errors?.default || 'Erro ao concluir pedido.')
+
+    }
+
+}
+
+
+
 export const SaleService = {
     getAll,
     getById,
     create,
-    cancelSale
+    cancelSale,
+    paySale,
+    concludeSale
 }
 
 

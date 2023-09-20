@@ -19,6 +19,7 @@ import {
     Contact,
     MyAccount,
     SaleList,
+    SaleDetails,
     CustomerDetails,
     AddressList,
     AddressDetails,
@@ -108,6 +109,7 @@ export const MainRoutes = () => {
 
             <Route path='/customer/my-account' element={<PrivateCustomer><MyAccount /></PrivateCustomer>} />
             <Route path='/customer/orders' element={<PrivateCustomer><SaleList /></PrivateCustomer>} />
+            <Route path='/customer/orders/details/:id' element={<PrivateCustomer><SaleDetails /></PrivateCustomer>} />
             <Route path='/customer/personal-data' element={<PrivateCustomer><CustomerDetails /></PrivateCustomer>} />
             <Route path='/customer/address' element={<PrivateCustomer><AddressList /></PrivateCustomer>} />
             <Route path='/customer/address/details/:id' element={<PrivateCustomer><AddressDetails /></PrivateCustomer>} />

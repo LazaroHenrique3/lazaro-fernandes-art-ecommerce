@@ -89,12 +89,12 @@ export const SaleList = () => {
                                         </IconButton>
                                     }
 
-                                    <IconButton color='primary' onClick={() => navigate(`/customer/sale/details/${row.id}`)}>
+                                    <IconButton color='primary' onClick={() => navigate(`/customer/orders/details/${row.id}`)}>
                                         <Icon>visibility</Icon>
                                     </IconButton>
                                 </StyledTableCell>
 
-                                <StyledTableCell size='small'>{row.id}</StyledTableCell>
+                                <StyledTableCell size='small'>{`#${row.id}`}</StyledTableCell>
                                 <StyledTableCell size='small'>{row.status}</StyledTableCell>
                                 <StyledTableCell size='small'>{dayjs(row.order_date).format('DD/MM/YYYY')}</StyledTableCell>
                                 <StyledTableCell size='small'>{dayjs(row.payment_due_date).format('DD/MM/YYYY')}</StyledTableCell>
