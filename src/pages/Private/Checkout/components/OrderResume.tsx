@@ -8,8 +8,11 @@ import {
 import { Scrollbars } from 'react-custom-scrollbars-2'
 
 import { useCartContext } from '../../../../shared/contexts'
-import { OrderResumeItem } from './OrderResumeItem'
-import { OrderResumeInfo } from './OrderResumeInfo'
+
+import { 
+    OrderResumeInfo, 
+    OrderResumeItem 
+} from './orderStepperComponents'
 
 interface IOrderResumeProps {
     selectedShippingPrice: number

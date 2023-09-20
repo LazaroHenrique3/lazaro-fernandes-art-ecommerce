@@ -4,7 +4,7 @@ import {
     Typography
 } from '@mui/material'
 
-import { formattedPrice } from '../../../../shared/util' 
+import { formattedPrice } from '../../../../../shared/util'
 
 interface IOrderResumeItemProps {
     image: string,

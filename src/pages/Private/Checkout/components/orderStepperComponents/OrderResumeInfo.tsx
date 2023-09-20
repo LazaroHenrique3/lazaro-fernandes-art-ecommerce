@@ -6,8 +6,8 @@ import {
     Divider,
 } from '@mui/material'
 
-import { formattedPrice } from '../../../../shared/util'
-import { useCartContext } from '../../../../shared/contexts'
+import { formattedPrice } from '../../../../../shared/util'
+import { useCartContext } from '../../../../../shared/contexts'
 
 interface ICartSummaryLine {
     label: string,

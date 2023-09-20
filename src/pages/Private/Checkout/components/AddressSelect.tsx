@@ -17,7 +17,7 @@ import {
 } from '@mui/material'
 
 import { NewAddressModal } from '../../../../shared/components/Modals' 
-import { AddressSelectCard } from './AddressSelectCard'
+import { AddressSelectCard } from './addressStepperComponents'
 import { IListAddress } from '../../../../shared/services/api/address/AddressService'
 import { Environment } from '../../../../shared/environment'
 
