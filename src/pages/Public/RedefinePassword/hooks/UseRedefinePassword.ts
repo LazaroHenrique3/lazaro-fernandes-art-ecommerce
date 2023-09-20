@@ -7,7 +7,10 @@ import { IVFormErrors } from '../../../../shared/forms'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import { useAuthContext } from '../../../../shared/contexts'
+import { 
+    useAuthContext, 
+    useNavBarContext 
+} from '../../../../shared/contexts'
 import { CustomerService } from '../../../../shared/services/api/customer/CustomerService'
 
 import {
@@ -22,6 +25,7 @@ interface IUseRedefinePassword {
 
 export const UseRedefinePassword = ({ setIsLoading, formRef }: IUseRedefinePassword) => {
     const navigate = useNavigate()
+    const { handleCloseModalLogin } = useNavBarContext()
 
     const { login } = useAuthContext()
 
@@ -48,7 +52,7 @@ export const UseRedefinePassword = ({ setIsLoading, formRef }: IUseRedefinePassw
             if (typeof resultLogin === 'string') {
                 toast.error(resultLogin)
             } else {
-                
+                handleCloseModalLogin()
                 navigate('/home')
             }
         } catch (errors) {

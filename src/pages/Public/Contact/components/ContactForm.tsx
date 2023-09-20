@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
     useMediaQuery,
     useTheme,
@@ -12,13 +13,17 @@ import {
     useVForm,
 } from '../../../../shared/forms'
 
-interface IContactFormProps {
-    isLoading: boolean
-    setLoading: (isLoading: boolean) => void
-}
+//Hooks personalizados
+import {
+    UseSendEmailContact
+} from '.././hooks'
 
-export const ContactForm = ({ isLoading, setLoading }: IContactFormProps) => {
+export const ContactForm = () => {
     const { formRef } = useVForm('formRef')
+
+    const [isLoading, setIsLoading] = useState(false)
+
+    const { sendEmail } = UseSendEmailContact({setIsLoading, formRef})
 
     const theme = useTheme()
 
@@ -28,7 +33,7 @@ export const ContactForm = ({ isLoading, setLoading }: IContactFormProps) => {
     return (
         <Grid container item xs={12} sm={7} md={8} justifyContent='center'>
             <Box minWidth='300px' flexGrow={1} padding={2}>
-                <VForm ref={formRef} onSubmit={() => console.log('')}>
+                <VForm ref={formRef} onSubmit={sendEmail}>
                     <Box display='flex' flexDirection='column' alignItems={(xsDown ? 'center' : '')} padding={2} gap={2}>
 
                         <Box display='flex' flexDirection='column' gap={2} width='100%'>
@@ -39,7 +44,12 @@ export const ContactForm = ({ isLoading, setLoading }: IContactFormProps) => {
                             <VTextField fullWidth multiline minRows={3} label='Mensagem' name='message' disabled={isLoading} />
                         </Box>
 
-                        <Button type='submit' variant="contained" color="primary" sx={{ width: '200px', fontSize: '16px' }}>
+                        <Button 
+                            disabled={isLoading}
+                            type='submit' 
+                            variant="contained" 
+                            color="primary" 
+                            sx={{ width: '200px', fontSize: '16px' }}>
                             Enviar
                         </Button>
                     </Box>

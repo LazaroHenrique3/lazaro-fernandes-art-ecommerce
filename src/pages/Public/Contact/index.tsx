@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import {
     useTheme,
     Box,
@@ -17,8 +15,6 @@ import {
 export const Contact = () => {
     const theme = useTheme()
 
-    const [isLoading, setIsLoading] = useState(false)
-
     return (
         <BasePageEcommerceLayout showStaticFooter>
             <Box display='flex' flexDirection='column' alignItems='center' component='section'>
@@ -29,7 +25,7 @@ export const Contact = () => {
                 <Grid container paddingX={10} justifyContent='center' alignItems='stretch'>
 
                     <LocalizationInfo/>
-                    <ContactForm isLoading={isLoading} setLoading={setIsLoading}/>
+                    <ContactForm/>
 
                 </Grid>
             </Box>
