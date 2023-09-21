@@ -88,6 +88,7 @@ const formatOrderInfo = (sale: Omit<ISaleListById, 'sale_items' | 'sale_address'
     //Tratando caso essas informações ainda não tenham sido informadas
     const deliveryDate = sale.delivery_date ? dayjs(sale.delivery_date).format('DD/MM/YYYY') : ' '
     const paymentReceivedDate = sale.payment_received_date ? dayjs(sale.payment_received_date).format('DD/MM/YYYY') : ' '
+    const trackingCode = sale.tracking_code ? sale.tracking_code : ' '
 
     //Formatando as Strings
     const shippingCost = formattedPrice(sale.shipping_cost)
@@ -106,7 +107,8 @@ const formatOrderInfo = (sale: Omit<ISaleListById, 'sale_items' | 'sale_address'
         estimated_delivery_date: estimatedDeliveryDate,
         delivery_date: deliveryDate,
         payment_received_date: paymentReceivedDate,
-        payment_due_date: paymentDueDate
+        payment_due_date: paymentDueDate,
+        tracking_code: trackingCode
     }
 
     return formattedOrder

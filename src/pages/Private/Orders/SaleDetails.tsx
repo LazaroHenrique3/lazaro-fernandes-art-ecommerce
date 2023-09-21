@@ -131,6 +131,10 @@ export const SaleDetails: React.FC = () => {
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+                                <VTextField fullWidth label='Código de rastreio' name='tracking_code' InputProps={{ readOnly: true }} disabled={isLoading} />
+                            </Grid>
+
+                            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
                                 <VTextField fullWidth label='Valor do frete' name='shipping_cost' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
