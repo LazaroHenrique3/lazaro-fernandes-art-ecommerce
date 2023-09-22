@@ -159,7 +159,7 @@ const create = async (
     }
 }
 
-const cancelSale = async (idCustomer: number, idSale: number) => {
+const cancelSale = async (idCustomer: number, idSale: number): Promise<void | Error> => {
 
     try {
         await api.put(`/sale/cancel/${idCustomer}/${idSale}`)
@@ -171,7 +171,7 @@ const cancelSale = async (idCustomer: number, idSale: number) => {
 
 }
 
-const paySale = async (idCustomer: number, idSale: number) => {
+const paySale = async (idCustomer: number, idSale: number): Promise<void | Error> => {
 
     try {
         await api.put(`/sale/pay/${idCustomer}/${idSale}`)
@@ -183,7 +183,7 @@ const paySale = async (idCustomer: number, idSale: number) => {
 
 }
 
-const concludeSale = async (idCustomer: number, idSale: number) => {
+const concludeSale = async (idCustomer: number, idSale: number): Promise<void | Error> => {
 
     try {
         await api.put(`/sale/concluded/${idCustomer}/${idSale}`)
