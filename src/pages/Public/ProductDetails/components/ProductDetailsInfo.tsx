@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import dayjs from 'dayjs'
+
 import {
     Grid,
     Typography,
@@ -10,7 +10,10 @@ import {
     Box
 } from '@mui/material'
 
-import { formattedPrice } from '../../../../shared/util'
+import { 
+    formattedDateBR, 
+    formattedPrice 
+} from '../../../../shared/util'
 
 import { useCartContext } from '../../../../shared/contexts'
 import { IListProduct } from '../../../../shared/services/api/product/ProductService'
@@ -34,7 +37,7 @@ export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) =
                     <InfoItem label="Técnica" value={product.technique_name} />
                     <InfoItem label="Categoria" value={product.category_name} />
                     <InfoItem label="Dimensões(cm)" value={product.dimension_name} />
-                    <InfoItem label="Produção" value={dayjs(product.production_date).format('DD/MM/YYYY')} />
+                    <InfoItem label="Produção" value={formattedDateBR(product.production_date)}/>
                 </InfoSection>
 
                 {product.description && (

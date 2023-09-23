@@ -13,7 +13,6 @@ import {
     TableHead,
     TableRow
 } from '@mui/material'
-import dayjs from 'dayjs'
 
 import { BasePagePrivateLayout } from '../../../shared/layouts'
 import { ISaleListAll } from '../../../shared/services/api/sales/SaleService'
@@ -25,7 +24,10 @@ import {
     StyledTableRow
 } from '../../../shared/components/StyledComponents/TableComponents'
 
-import { formattedPrice } from '../../../shared/util'
+import { 
+    formattedDateBR, 
+    formattedPrice 
+} from '../../../shared/util'
 
 //Hooks personalizados
 import {
@@ -96,8 +98,8 @@ export const SaleList = () => {
 
                                 <StyledTableCell size='small'>{`#${row.id}`}</StyledTableCell>
                                 <StyledTableCell size='small'>{row.status}</StyledTableCell>
-                                <StyledTableCell size='small'>{dayjs(row.order_date).format('DD/MM/YYYY')}</StyledTableCell>
-                                <StyledTableCell size='small'>{dayjs(row.payment_due_date).format('DD/MM/YYYY')}</StyledTableCell>
+                                <StyledTableCell size='small'>{formattedDateBR(row.order_date)}</StyledTableCell>
+                                <StyledTableCell size='small'>{formattedDateBR(row.payment_due_date)}</StyledTableCell>
                                 <StyledTableCell size='small'>{formattedPrice(row.total + row.shipping_cost)}</StyledTableCell>
                             </StyledTableRow>
                         ))}

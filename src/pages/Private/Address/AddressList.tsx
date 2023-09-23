@@ -18,7 +18,7 @@ import { BasePagePrivateLayout } from '../../../shared/layouts'
 import { IListAddress } from '../../../shared/services/api/address/AddressService'
 import { ListTools } from '../../../shared/components' 
 import { Environment } from '../../../shared/environment'
-import { formatCEP } from './util/formatFunction'
+import { formatCEP } from '../../../shared/util'
 
 import {
     StyledTableCell,

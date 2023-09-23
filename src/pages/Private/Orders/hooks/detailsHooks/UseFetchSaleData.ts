@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FormHandles } from '@unform/core'
-import dayjs from 'dayjs'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -15,7 +14,7 @@ import {
     TSaleStatus
 } from '../../../../../shared/services/api/sales/SaleService'
 import { IListAddress } from '../../../../../shared/services/api/address/AddressService'
-import { formattedPrice } from '../../../../../shared/util'
+import { formattedDateBR, formattedPrice } from '../../../../../shared/util'
 
 interface IUseFetchSaleDataProps {
     setIsLoading: (status: boolean) => void
@@ -86,17 +85,17 @@ export const UseFetchSaleData = ({
 const formatOrderInfo = (sale: Omit<ISaleListById, 'sale_items' | 'sale_address'>) => {
 
     //Tratando caso essas informações ainda não tenham sido informadas
-    const deliveryDate = sale.delivery_date ? dayjs(sale.delivery_date).format('DD/MM/YYYY') : ' '
-    const paymentReceivedDate = sale.payment_received_date ? dayjs(sale.payment_received_date).format('DD/MM/YYYY') : ' '
+    const deliveryDate = sale.delivery_date ? formattedDateBR(sale.delivery_date) : ' '
+    const paymentReceivedDate = sale.payment_received_date ? formattedDateBR(sale.payment_received_date) : ' '
     const trackingCode = sale.tracking_code ? sale.tracking_code : ' '
 
     //Formatando as Strings
     const shippingCost = formattedPrice(sale.shipping_cost)
     const subtotal = formattedPrice(sale.total)
     const totalOrderCost = formattedPrice(sale.total + sale.shipping_cost)
-    const orderDate = dayjs(sale.order_date).format('DD/MM/YYYY')
-    const estimatedDeliveryDate = dayjs(sale.estimated_delivery_date).format('DD/MM/YYYY')
-    const paymentDueDate = dayjs(sale.payment_due_date).format('DD/MM/YYYY')
+    const orderDate = formattedDateBR(sale.order_date)
+    const estimatedDeliveryDate = formattedDateBR(sale.estimated_delivery_date)
+    const paymentDueDate = formattedDateBR(sale.payment_due_date)
 
     const formattedOrder = {
         ...sale,
