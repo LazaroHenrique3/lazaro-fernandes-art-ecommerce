@@ -6,21 +6,7 @@ import {
     LinearProgress,
     Paper,
     Typography,
-    Table,
-    TableBody,
-    TableContainer,
-    TableFooter,
-    TableHead,
-    TableRow,
-    Skeleton
 } from '@mui/material'
-
-import {
-    StyledTableCell,
-    StyledTableRow
-} from '../../../shared/components/StyledComponents/TableComponents'
-
-import { formattedPrice } from '../../../shared/util'
 
 import {
     ISaleItemsList,
@@ -33,8 +19,8 @@ import {
 } from '../../../shared/services/api/address/AddressService'
 
 import {
-    DeliveryAddressCard,
-    OrderPaymentOrConcludeCard
+    TableSaleItems,
+    SaleInfoSection
 } from './components'
 
 import { BasePagePrivateLayout } from '../../../shared/layouts'
@@ -151,84 +137,19 @@ export const SaleDetails: React.FC = () => {
                 </Box>
             </VForm>
 
-            <TableContainer component={Paper} sx={{ m: 1, width: 'auto' }} >
-                <Typography variant='h6'>Items do pedido</Typography>
+            <TableSaleItems 
+                isLoading={isLoading} 
+                salesItemsList={salesItems}/>
 
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell size='small' sx={{ fontWeight: 600 }}>ID</StyledTableCell>
-                            <StyledTableCell size='small' sx={{ fontWeight: 600 }}>Produto</StyledTableCell>
-                            <StyledTableCell size='small' sx={{ fontWeight: 600 }}>Quantidade</StyledTableCell>
-                            <StyledTableCell size='small' sx={{ fontWeight: 600 }}>Preço</StyledTableCell>
-                            <StyledTableCell size='small' sx={{ fontWeight: 600 }}>Desconto</StyledTableCell>
-                            <StyledTableCell size='small' sx={{ fontWeight: 600 }}>Total</StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {salesItems.map((item) => (
-                            <StyledTableRow key={item.product_id}>
-                                <StyledTableCell size='small'>{`#${item.product_id}`}</StyledTableCell>
-                                <StyledTableCell size='small'>{item.product_title}</StyledTableCell>
-                                <StyledTableCell size='small'>{item.quantity}</StyledTableCell>
-                                <StyledTableCell size='small'>{formattedPrice(item.price)}</StyledTableCell>
-                                <StyledTableCell size='small'>{formattedPrice(item.discount)}</StyledTableCell>
-                                <StyledTableCell size='small'>{formattedPrice((item.price * item.quantity) - item.discount)}</StyledTableCell>
-                            </StyledTableRow>
-                        ))}
-                    </TableBody>
-
-                    <TableFooter>
-                        {isLoading && (
-                            <TableRow>
-                                <StyledTableCell size='small' colSpan={3}>
-                                    <LinearProgress variant='indeterminate' />
-                                </StyledTableCell>
-                            </TableRow>
-                        )}
-                    </TableFooter>
-                </Table>
-            </TableContainer>
-
-            <Grid container padding={2} spacing={2}>
-                <Grid container item xl={12}>
-                    <Typography variant='h6'>Informações do pedido</Typography>
-                </Grid>
-
-                {(isLoading || saleAddress.id === undefined) ? (
-                    <>
-                        <Grid container item xs={12} sm={6} lg={4} xl={3}>
-                            <Skeleton variant="rectangular" width={300} height={200} />
-                        </Grid>
-
-                        <Grid container item xs={12} sm={6} lg={4} xl={3}>
-                            <Skeleton variant="rectangular" width={300} height={200} />
-                        </Grid>
-                    </>
-                ) : (
-                    <>
-                        <DeliveryAddressCard
-                            cep={saleAddress.cep}
-                            city={saleAddress.city}
-                            state={saleAddress.state}
-                            neighborhood={saleAddress.neighborhood}
-                            number={String(saleAddress.number)}
-                            street={saleAddress.street}
-                            complement={saleAddress.complement}
-                        />
-
-                        {(saleStatus === 'Ag. Pagamento' || saleStatus === 'Enviado') &&
-                            <OrderPaymentOrConcludeCard
-                                handlePaymentOrder={() => handlePaySale(Number(id))}
-                                handleConcludeOrder={() => handleConcludeSale(Number(id))}
-                                paymentMethod={paymentMethod}
-                                saleStatus={saleStatus}
-                            />
-                        }
-                    </>
-                )}
-
-            </Grid>
+            <SaleInfoSection
+                isLoading={isLoading}
+                idSale={Number(id)}
+                saleStatus={saleStatus}
+                paymentMethod={paymentMethod}
+                saleAddress={saleAddress}
+                handlePaySale={handlePaySale}
+                handleConcludeSale={handleConcludeSale}
+            />
 
         </BasePagePrivateLayout>
     )

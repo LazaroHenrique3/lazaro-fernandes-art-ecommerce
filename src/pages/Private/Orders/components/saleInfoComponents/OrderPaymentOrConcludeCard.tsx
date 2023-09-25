@@ -11,7 +11,7 @@ import {
 import {
     TSalePaymentMethods,
     TSaleStatus
-} from '../../../../shared/services/api/sales/SaleService'
+} from '../../../../../shared/services/api/sales/SaleService'
 
 interface IPaymentSelectCardProps {
     saleStatus: TSaleStatus
