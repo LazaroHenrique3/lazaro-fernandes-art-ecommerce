@@ -36,8 +36,6 @@ export const UseHandleSale = ({ setIsLoading }: IUseCalculateShippingProps) => {
     ) => {
         if (!idUser) return
 
-        if (!confirm('Confirma todas as informações?')) return
-
         try {
             const saleItems: ISaleItems[] = productsInCart.map((product) => ({
                 idProduct: product.id,
