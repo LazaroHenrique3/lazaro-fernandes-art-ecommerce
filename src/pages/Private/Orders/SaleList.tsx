@@ -21,6 +21,7 @@ import { Environment } from '../../../shared/environment'
 
 import {
     StyledTableCell,
+    StyledTableCellStatus,
     StyledTableRow
 } from '../../../shared/components/StyledComponents/TableComponents'
 
@@ -97,7 +98,7 @@ export const SaleList = () => {
                                 </StyledTableCell>
 
                                 <StyledTableCell size='small'>{`#${row.id}`}</StyledTableCell>
-                                <StyledTableCell size='small'>{row.status}</StyledTableCell>
+                                <StyledTableCellStatus size='small' status={row.status}/>
                                 <StyledTableCell size='small'>{formattedDateBR(row.order_date)}</StyledTableCell>
                                 <StyledTableCell size='small'>{formattedDateBR(row.payment_due_date)}</StyledTableCell>
                                 <StyledTableCell size='small'>{formattedPrice(row.total + row.shipping_cost)}</StyledTableCell>

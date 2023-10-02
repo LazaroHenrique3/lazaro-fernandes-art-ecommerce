@@ -16,3 +16,19 @@ export const Environment = {
     */
     URL_BASE: 'http://localhost:3333'
 }
+
+type EnvironmentStatusColorsType = {
+    [key: string]: string
+}
+
+//Padrão de cores para os status
+export const EnvironmentStatusColors: EnvironmentStatusColorsType = {
+    'Ativo': '#6B8E23',
+    'Inativo': '#FF0000',
+    'Vendido': '#FFA500',
+    'Ag. Pagamento': '#FFA500',
+    'Em preparação': '#87CEEB',
+    'Enviado': '#008000',
+    'Concluída': '#6B8E23',
+    'Cancelada': '#FF0000'
+}
