@@ -19,6 +19,7 @@ import {
     VTextField,
     VTextFieldCPF,
     VTextFieldCellphone,
+    VTextFieldPassword,
     useVForm
 } from '../../../forms'
 
@@ -46,6 +47,8 @@ export const RegisterModal = () => {
     const { formRef } = useVForm('formRef')
 
     const [isLoading, setIsLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
     const [open, setOpen] = useState(false)
     const handleOpen = () => {
@@ -140,12 +143,26 @@ export const RegisterModal = () => {
                                                 <VTextFieldCPF disabled={isLoading} />
                                             </Grid>
 
-                                            <Grid item xs={12}  >
-                                                <VTextField fullWidth label='Senha' name='password' type='password' disabled={isLoading} />
+                                            <Grid item xs={12}>
+                                                <VTextFieldPassword
+                                                    fullWidth
+                                                    name='password'
+                                                    label='Senha'
+                                                    disabled={isLoading}
+                                                    showPassword={showPassword}
+                                                    handleClickShowPassword={setShowPassword}
+                                                    size='small' />
                                             </Grid>
 
-                                            <Grid item xs={12}  >
-                                                <VTextField fullWidth label='Confirmar Senha' name='confirmPassword' type='password' disabled={isLoading} />
+                                            <Grid item xs={12}>
+                                                <VTextFieldPassword
+                                                    fullWidth
+                                                    name='confirmPassword'
+                                                    label='Confirmar Senha'
+                                                    disabled={isLoading}
+                                                    showPassword={showConfirmPassword}
+                                                    handleClickShowPassword={setShowConfirmPassword}
+                                                    size='small' />
                                             </Grid>
 
                                             <Grid item xs={12} >

@@ -13,6 +13,7 @@ import {
 import {
     VForm,
     VTextField,
+    VTextFieldPassword,
     useVForm
 } from '../../../forms'
 
@@ -45,6 +46,7 @@ export const LoginModal = () => {
     const { openModalLogin, handleCloseModalLogin } = useNavBarContext()
 
     const [isLoading, setIsLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
 
     //Hooks personalizados
     const { handleLogin } = UseLoginCustomer({ setIsLoading, formRef })
@@ -70,9 +72,22 @@ export const LoginModal = () => {
                                 LOGIN
                             </Typography>
 
-                            <VTextField fullWidth type='email' label='Email' name='email' disabled={isLoading} size='small' />
+                            <VTextField 
+                                fullWidth 
+                                type='email' 
+                                label='Email' 
+                                name='email' 
+                                disabled={isLoading} 
+                                size='small' />
 
-                            <VTextField fullWidth type='password' label='Senha' name='password' disabled={isLoading} size='small' />
+                            <VTextFieldPassword
+                                fullWidth
+                                name='password'
+                                label='Senha'
+                                disabled={isLoading}
+                                showPassword={showPassword}
+                                handleClickShowPassword={setShowPassword}
+                                size='small' />
 
                             <Button
                                 type='submit'

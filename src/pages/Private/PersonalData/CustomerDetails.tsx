@@ -13,7 +13,8 @@ import {
     VSelect,
     VDateInput,
     VTextFieldCPF,
-    VTextFieldCellphone
+    VTextFieldCellphone,
+    VTextFieldPassword
 } from '../../../shared/forms'
 
 //Hooks personalizados
@@ -36,6 +37,8 @@ export const CustomerDetails: React.FC = () => {
     const [image, setImage] = useState('')
 
     const [isAlterPassword, setIsAlterPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
     //Hooks personalizados de Customer
     UseFetchCustomerData({ setIsLoading, setName, setImage, formRef, id })
@@ -158,11 +161,25 @@ export const CustomerDetails: React.FC = () => {
                             <Grid container item direction='row' spacing={2}>
 
                                 <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
-                                    <VTextField fullWidth label='Senha' name='password' type='password' disabled={isLoading} />
+                                    <VTextFieldPassword
+                                        fullWidth
+                                        name='password'
+                                        label='Senha'
+                                        disabled={isLoading}
+                                        showPassword={showPassword}
+                                        handleClickShowPassword={setShowPassword}
+                                        size='small' />
                                 </Grid>
 
                                 <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
-                                    <VTextField fullWidth label='Confirmar Senha' name='confirmPassword' type='password' disabled={isLoading} />
+                                    <VTextFieldPassword
+                                        fullWidth
+                                        name='confirmPassword'
+                                        label='Confirmar Senha'
+                                        disabled={isLoading}
+                                        showPassword={showConfirmPassword}
+                                        handleClickShowPassword={setShowConfirmPassword}
+                                        size='small' />
                                 </Grid>
 
                             </Grid>
