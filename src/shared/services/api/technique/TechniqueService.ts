@@ -27,9 +27,9 @@ const getAll = async (page = 1, filter = '', id?: number): Promise<ITechniqueTot
     let relativeUrl = ''
 
     if (id) {
-        relativeUrl = `/technique?id=${id}&page=${page}&limit=${LIMIT_OF_TECHNIQUES}&filter=${filter}`
+        relativeUrl = `/technique?id=${id}&page=${page}&limit=${LIMIT_OF_TECHNIQUES}&showInative=true&filter=${filter}`
     } else {
-        relativeUrl = `/technique?page=${page}&limit=${LIMIT_OF_TECHNIQUES}&filter=${filter}`
+        relativeUrl = `/technique?page=${page}&limit=${LIMIT_OF_TECHNIQUES}&showInative=true&filter=${filter}`
     }
 
     try {

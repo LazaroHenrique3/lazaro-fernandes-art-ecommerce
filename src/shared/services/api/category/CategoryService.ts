@@ -27,9 +27,9 @@ const getAll = async (page = 1, filter = '', id?: number): Promise<ICategoryTota
     let relativeUrl = ''
 
     if (id) {
-        relativeUrl = `/category?id=${id}&page=${page}&limit=${LIMIT_OF_CATEGORIES}&filter=${filter}`
+        relativeUrl = `/category?id=${id}&page=${page}&limit=${LIMIT_OF_CATEGORIES}&showInative=true&filter=${filter}`
     } else {
-        relativeUrl = `/category?page=${page}&limit=${LIMIT_OF_CATEGORIES}&filter=${filter}`
+        relativeUrl = `/category?page=${page}&limit=${LIMIT_OF_CATEGORIES}&showInative=true&filter=${filter}`
     }
 
     try {
