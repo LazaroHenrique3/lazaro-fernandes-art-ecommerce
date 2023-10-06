@@ -36,7 +36,7 @@ export const CartItem: React.FC<ICartItemProps> = ({ id, image, title, price, qu
 
     return (
         <Box width='250px' padding='3px' marginTop={2} marginRight={1} display='flex' justifyContent='start' component={Paper}>
-            <img height='100px' src={image} alt="product-image" />
+            <img height='100px' style={{ maxWidth: '80px' }} src={image} alt="product-image" />
 
             <Box width='100%' marginLeft={2} display='flex' justifyContent='space-between' alignSelf='center'>
                 <Box maxWidth='130px'>

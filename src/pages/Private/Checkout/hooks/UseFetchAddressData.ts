@@ -28,7 +28,7 @@ export const UseFetchAddressData = ({ setIsLoading, setRows, setTotalCount, sear
         const fetchData = () => {
             debounce(async () => {
                 if (idUser) {
-                    const result = await AddressService.getAll(page, search, idUser)
+                    const result = await AddressService.getAll(page, search, idUser, false)
                     setIsLoading(false)
 
                     if (result instanceof Error) {
