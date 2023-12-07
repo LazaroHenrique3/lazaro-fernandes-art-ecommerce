@@ -30,6 +30,7 @@ interface IProductCardProps {
     id: number
     title: string
     status: string
+    type: string
     image: string
     price: number
     weight: number
@@ -37,7 +38,7 @@ interface IProductCardProps {
     quantity: number
 }
 
-export const ProductCard: React.FC<IProductCardProps> = ({ id, title, status, image, price, weight, dimension, quantity }) => {
+export const ProductCard: React.FC<IProductCardProps> = ({ id, title, status, type, image, price, weight, dimension, quantity }) => {
     const theme = useTheme()
 
     const { addProductInCart } = useCartContext()
@@ -57,6 +58,10 @@ export const ProductCard: React.FC<IProductCardProps> = ({ id, title, status, im
                     <CardContent>
                         <Typography gutterBottom fontWeight={600} textTransform='uppercase' textAlign='center' variant="h6" component="div" noWrap textOverflow='ellipsis'>
                             {title}
+                        </Typography>
+
+                        <Typography gutterBottom fontWeight={400} textTransform='uppercase' textAlign='center' variant="h6" component="div" noWrap textOverflow='ellipsis'>
+                            {type}
                         </Typography>
 
                         <Typography gutterBottom fontWeight={600} textTransform='uppercase' textAlign='center' variant="h6" color={theme.palette.primary.light} component="div">

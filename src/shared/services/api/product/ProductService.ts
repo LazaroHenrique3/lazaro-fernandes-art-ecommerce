@@ -14,6 +14,7 @@ export interface IImageProps {
 export interface IListProduct {
     id: number
     status: 'Ativo' | 'Vendido' | 'Inativo'
+    type: 'Print' | 'Original'
     title: string
     orientation: 'Retrato' | 'Paisagem'
     quantity: number
@@ -46,13 +47,13 @@ interface ErrorResponse {
     }
 }
 
-const getAll = async (page = 1, category = '', technique = '', order = '', filter = '', id?: number): Promise<IProductTotalCount | Error> => {
+const getAll = async (page = 1, category = '', technique = '', order = '', type = '', filter = '', id?: number): Promise<IProductTotalCount | Error> => {
     let relativeUrl = ''
 
     if (id) {
-        relativeUrl = `/product?id=${id}&page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}&category=${category}&technique=${technique}&order=${order}`
+        relativeUrl = `/product?id=${id}&page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}&category=${category}&technique=${technique}&type=${type}&order=${order}`
     } else {
-        relativeUrl = `/product?page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}&category=${category}&technique=${technique}&order=${order}`
+        relativeUrl = `/product?page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}&category=${category}&technique=${technique}&type=${type}&order=${order}`
     }
 
     try {

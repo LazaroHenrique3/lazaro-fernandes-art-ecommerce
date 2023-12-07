@@ -37,7 +37,9 @@ export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) =
                     <InfoItem label="Técnica" value={product.technique_name} />
                     <InfoItem label="Categoria" value={product.category_name} />
                     <InfoItem label="Dimensões(cm)" value={product.dimension_name} />
+                    <InfoItem label="Tipo" value={product.type} />
                     <InfoItem label="Produção" value={formattedDateBR(product.production_date)}/>
+                    <InfoItem label="Quantidade" value={String(product.quantity)}/>
                 </InfoSection>
 
                 {product.description && (

@@ -11,12 +11,13 @@ import {
 import {
     CategoryOptionSearchMenu,
     TechniqueOptionSearchMenu,
-    OrderOptionSearchMenu
+    OrderOptionSearchMenu,
+    TypeOptionSearchMenu
 } from './optionsSearchMenu'
 
 //Hooks personalizados
-import { 
-    UseFetchCategoryData, 
+import {
+    UseFetchCategoryData,
     UseFetchTechniqueData
 } from '../hooks'
 
@@ -25,10 +26,12 @@ interface IOptionsSearchMenuProps {
     selectedCategory: string
     selectedTechnique: string
     selectedOrder: string
+    selectedType: string
     setOpenSearchFilterMenu: (openSearchFilterMenu: boolean) => void
     onClickSelectCategoryFilter: (newText: string) => void
     onClickSelectTechniqueFilter: (newText: string) => void
     onClickOrderFilter: (newText: string) => void
+    onClickTypeFilter: (newText: string) => void
 }
 
 export const SearchMenu: React.FC<IOptionsSearchMenuProps> = ({
@@ -36,10 +39,12 @@ export const SearchMenu: React.FC<IOptionsSearchMenuProps> = ({
     selectedCategory,
     selectedTechnique,
     selectedOrder,
+    selectedType,
     setOpenSearchFilterMenu,
     onClickSelectCategoryFilter,
     onClickSelectTechniqueFilter,
     onClickOrderFilter,
+    onClickTypeFilter,
 }) => {
 
     const theme = useTheme()
@@ -65,6 +70,11 @@ export const SearchMenu: React.FC<IOptionsSearchMenuProps> = ({
                             <OrderOptionSearchMenu
                                 onClickSelectOrderFilter={onClickOrderFilter}
                                 selectedOrder={selectedOrder}
+                                setOpenSearchFilterMenu={setOpenSearchFilterMenu} />
+
+                            <TypeOptionSearchMenu
+                                onClickSelectTypeFilter={onClickTypeFilter}
+                                selectedType={selectedType}
                                 setOpenSearchFilterMenu={setOpenSearchFilterMenu} />
 
                             <CategoryOptionSearchMenu

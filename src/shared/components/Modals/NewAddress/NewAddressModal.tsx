@@ -117,11 +117,11 @@ export const NewAddressModal: React.FC<INewAddressModal> = ({addresses, updateAd
                                             </Grid>
 
                                             <Grid item xs={12}>
-                                                <VTextField fullWidth label='Cidade' name='city' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                                <VTextField fullWidth label='Cidade 🚫' name='city' InputProps={{ readOnly: true }} disabled={isLoading} />
                                             </Grid>
 
                                             <Grid item xs={12}>
-                                                <VTextField fullWidth label='Estado' name='state' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                                <VTextField fullWidth label='Estado 🚫' name='state' InputProps={{ readOnly: true }} disabled={isLoading} />
                                             </Grid>
 
                                             <Grid item xs={12}>

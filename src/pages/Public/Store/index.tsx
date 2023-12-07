@@ -71,8 +71,13 @@ export const Store = () => {
         return searchParams.get('order') || ''
     }, [searchParams])
 
+    const type = useMemo(() => {
+        //Pega o parâmetro na URL
+        return searchParams.get('type') || ''
+    }, [searchParams])
+
     //Buscando os produtos
-    UseFetchProductData({ setIsLoading, setProducts, setTotalCount, search, category, technique, order, page })
+    UseFetchProductData({ setIsLoading, setProducts, setTotalCount, search, category, technique, order, type, page })
 
     //Controla se o menu de filtro aparece em dispositivos menores
     const [openSearchFilterMenu, setOpenSearchFilterMenu] = useState(false)
@@ -88,11 +93,11 @@ export const Store = () => {
         <BasePageEcommerceLayout>
             <Box display='flex' flexDirection='column' alignItems='center' sx={container} component='section'>
                 <Typography variant='h2' marginTop={5} marginBottom={10} color={theme.palette.primary.light} fontWeight={800}>
-                    Loja 
+                    Loja
                 </Typography>
 
                 <ListProductsForSaleTools
-                    onChangeSearchText={text => setSearchParams({ search: text, category: category, technique: technique, order: order, page: '1' }, { replace: true })}
+                    onChangeSearchText={text => setSearchParams({ search: text, category: category, technique: technique, order: order, type: type, page: '1' }, { replace: true })}
                     searchText={search}
                     showFilterButton={smDown}
                     onClickFilterButton={setOpenSearchFilterMenu}
@@ -104,11 +109,13 @@ export const Store = () => {
                             selectedCategory={category}
                             selectedTechnique={technique}
                             selectedOrder={order}
+                            selectedType={type}
                             openSearchFilterMenu={openSearchFilterMenu}
                             setOpenSearchFilterMenu={setOpenSearchFilterMenu}
-                            onClickSelectCategoryFilter={text => setSearchParams({ search: search, category: text, technique: technique, order: order, page: '1' }, { replace: true })}
-                            onClickSelectTechniqueFilter={text => setSearchParams({ search: search, category: category, technique: text, order: order, page: '1' }, { replace: true })}
-                            onClickOrderFilter={text => setSearchParams({ search: search, category: category, technique: technique, order: text, page: '1' }, { replace: true })}
+                            onClickSelectCategoryFilter={text => setSearchParams({ search: search, category: text, technique: technique, order: order, type: type, page: '1' }, { replace: true })}
+                            onClickSelectTechniqueFilter={text => setSearchParams({ search: search, category: category, technique: text, order: order, type: type, page: '1' }, { replace: true })}
+                            onClickOrderFilter={text => setSearchParams({ search: search, category: category, technique: technique, order: text, type: type, page: '1' }, { replace: true })}
+                            onClickTypeFilter={text => setSearchParams({ search: search, category: category, technique: technique, order: order, type: text, page: '1' }, { replace: true })}
                         />
                     </Grid>
 
@@ -142,6 +149,7 @@ export const Store = () => {
                                                 id={product.id}
                                                 title={product.title}
                                                 status={product.status}
+                                                type={product.type}
                                                 image={product.main_image}
                                                 price={product.price}
                                                 weight={product.weight}

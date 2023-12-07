@@ -85,51 +85,51 @@ export const SaleDetails: React.FC = () => {
 
                         <Grid container item direction='row' spacing={2}>
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Status' name='status' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Status 🚫' name='status' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Data do pedido' name='order_date' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Data do pedido 🚫' name='order_date' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Previsão de entrega' name='estimated_delivery_date' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Previsão de entrega 🚫' name='estimated_delivery_date' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Vencimento' name='payment_due_date' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Vencimento 🚫' name='payment_due_date' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Forma de pagamento' name='payment_method' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Forma de pagamento 🚫' name='payment_method' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Forma de envio' name='shipping_method' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Forma de envio 🚫' name='shipping_method' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Data de recebimento' name='payment_received_date' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Data de recebimento 🚫' name='payment_received_date' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Data de entrega' name='delivery_date' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Data de entrega 🚫' name='delivery_date' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Código de rastreio' name='tracking_code' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Código de rastreio 🚫' name='tracking_code' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Valor do frete' name='shipping_cost' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Valor do frete 🚫' name='shipping_cost' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Subtotal' name='subtotal' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Subtotal 🚫' name='subtotal' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                                <VTextField fullWidth label='Total' name='total' InputProps={{ readOnly: true }} disabled={isLoading} />
+                                <VTextField fullWidth label='Total 🚫' name='total' InputProps={{ readOnly: true }} disabled={isLoading} />
                             </Grid>
                         </Grid>
 
