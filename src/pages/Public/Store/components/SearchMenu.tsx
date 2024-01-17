@@ -20,17 +20,20 @@ import {
     UseFetchCategoryData,
     UseFetchTechniqueData
 } from '../hooks'
+import { StatusOptionSearchMenu } from './optionsSearchMenu/StatusOptionSearchMenu'
 
 interface IOptionsSearchMenuProps {
     openSearchFilterMenu: boolean
     selectedCategory: string
     selectedTechnique: string
     selectedOrder: string
+    selectedStatus: string,
     selectedType: string
     setOpenSearchFilterMenu: (openSearchFilterMenu: boolean) => void
     onClickSelectCategoryFilter: (newText: string) => void
     onClickSelectTechniqueFilter: (newText: string) => void
     onClickOrderFilter: (newText: string) => void
+    onClickSelectStatusFilter: (newText: string) => void
     onClickTypeFilter: (newText: string) => void
 }
 
@@ -39,11 +42,13 @@ export const SearchMenu: React.FC<IOptionsSearchMenuProps> = ({
     selectedCategory,
     selectedTechnique,
     selectedOrder,
+    selectedStatus,
     selectedType,
     setOpenSearchFilterMenu,
     onClickSelectCategoryFilter,
     onClickSelectTechniqueFilter,
     onClickOrderFilter,
+    onClickSelectStatusFilter,
     onClickTypeFilter,
 }) => {
 
@@ -70,6 +75,11 @@ export const SearchMenu: React.FC<IOptionsSearchMenuProps> = ({
                             <OrderOptionSearchMenu
                                 onClickSelectOrderFilter={onClickOrderFilter}
                                 selectedOrder={selectedOrder}
+                                setOpenSearchFilterMenu={setOpenSearchFilterMenu} />
+
+                            <StatusOptionSearchMenu
+                                onClickSelectStatusFilter={onClickSelectStatusFilter}
+                                selectedStatus={selectedStatus}
                                 setOpenSearchFilterMenu={setOpenSearchFilterMenu} />
 
                             <TypeOptionSearchMenu

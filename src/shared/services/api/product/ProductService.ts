@@ -47,13 +47,13 @@ interface ErrorResponse {
     }
 }
 
-const getAll = async (page = 1, category = '', technique = '', order = '', type = '', filter = '', id?: number): Promise<IProductTotalCount | Error> => {
+const getAll = async (page = 1, category = '', technique = '', order = '', type = '', filter = '', status = '', id?: number): Promise<IProductTotalCount | Error> => {
     let relativeUrl = ''
 
     if (id) {
-        relativeUrl = `/product?id=${id}&page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}&category=${category}&technique=${technique}&type=${type}&order=${order}`
+        relativeUrl = `/product?id=${id}&page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}&category=${category}&technique=${technique}&type=${type}&order=${order}&status=${status}`
     } else {
-        relativeUrl = `/product?page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}&category=${category}&technique=${technique}&type=${type}&order=${order}`
+        relativeUrl = `/product?page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}&category=${category}&technique=${technique}&type=${type}&order=${order}&status=${status}`
     }
 
     try {

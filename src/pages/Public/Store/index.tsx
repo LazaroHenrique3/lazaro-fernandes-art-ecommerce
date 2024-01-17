@@ -71,13 +71,18 @@ export const Store = () => {
         return searchParams.get('order') || ''
     }, [searchParams])
 
+    const status = useMemo(() => {
+        //Pega o parâmetro na URL
+        return searchParams.get('status') || ''
+    }, [searchParams])
+
     const type = useMemo(() => {
         //Pega o parâmetro na URL
         return searchParams.get('type') || ''
     }, [searchParams])
 
     //Buscando os produtos
-    UseFetchProductData({ setIsLoading, setProducts, setTotalCount, search, category, technique, order, type, page })
+    UseFetchProductData({ setIsLoading, setProducts, setTotalCount, search, category, technique, order, type, status, page })
 
     //Controla se o menu de filtro aparece em dispositivos menores
     const [openSearchFilterMenu, setOpenSearchFilterMenu] = useState(false)
@@ -109,13 +114,15 @@ export const Store = () => {
                             selectedCategory={category}
                             selectedTechnique={technique}
                             selectedOrder={order}
+                            selectedStatus={status}
                             selectedType={type}
                             openSearchFilterMenu={openSearchFilterMenu}
                             setOpenSearchFilterMenu={setOpenSearchFilterMenu}
-                            onClickSelectCategoryFilter={text => setSearchParams({ search: search, category: text, technique: technique, order: order, type: type, page: '1' }, { replace: true })}
-                            onClickSelectTechniqueFilter={text => setSearchParams({ search: search, category: category, technique: text, order: order, type: type, page: '1' }, { replace: true })}
-                            onClickOrderFilter={text => setSearchParams({ search: search, category: category, technique: technique, order: text, type: type, page: '1' }, { replace: true })}
-                            onClickTypeFilter={text => setSearchParams({ search: search, category: category, technique: technique, order: order, type: text, page: '1' }, { replace: true })}
+                            onClickSelectCategoryFilter={text => setSearchParams({ search: search, category: text, technique: technique, order: order, status: status, type: type, page: '1' }, { replace: true })}
+                            onClickSelectTechniqueFilter={text => setSearchParams({ search: search, category: category, technique: text, order: order, status: status, type: type, page: '1' }, { replace: true })}
+                            onClickOrderFilter={text => setSearchParams({ search: search, category: category, technique: technique, order: text, status: status, type: type, page: '1' }, { replace: true })}
+                            onClickSelectStatusFilter={text => setSearchParams({ search: search, category: category, technique: technique, order: order, status: text, type: type, page: '1' }, { replace: true })}
+                            onClickTypeFilter={text => setSearchParams({ search: search, category: category, technique: technique, order: order, status: status, type: text, page: '1' }, { replace: true })}
                         />
                     </Grid>
 

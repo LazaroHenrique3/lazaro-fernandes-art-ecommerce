@@ -16,10 +16,11 @@ interface IUseFetchProductDataProps {
     technique: string
     order: string
     type: string
+    status: string
     page: number
 }
 
-export const UseFetchProductData = ({setIsLoading, setProducts, setTotalCount, search, category, technique, order, type, page}: IUseFetchProductDataProps) => {
+export const UseFetchProductData = ({setIsLoading, setProducts, setTotalCount, search, category, technique, order, type, status, page}: IUseFetchProductDataProps) => {
     //Para adicionar delay na pesquisa
     const { debounce } = useDebounce()
 
@@ -28,7 +29,7 @@ export const UseFetchProductData = ({setIsLoading, setProducts, setTotalCount, s
     
         const fetchData = () => {
             debounce(async () => {
-                const result = await ProductService.getAll(page, category, technique, order, type, search)
+                const result = await ProductService.getAll(page, category, technique, order, type, search, status)
                 setIsLoading(false)
     
                 if (result instanceof Error) {
@@ -43,6 +44,6 @@ export const UseFetchProductData = ({setIsLoading, setProducts, setTotalCount, s
     
         fetchData()
     
-    }, [search, category, technique, order, type, page])
+    }, [search, category, technique, order, type, status, page])
 }
 
