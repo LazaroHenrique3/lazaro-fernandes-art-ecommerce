@@ -43,7 +43,7 @@ export const CustomerDetails: React.FC = () => {
     //Hooks personalizados de Customer
     UseFetchCustomerData({ setIsLoading, setName, setImage, formRef, id })
 
-    const { handleSave } = UseHandleCustomer({ setIsLoading, setName, setIsAlterPassword, isAlterPassword, formRef, id })
+    const { handleSave, handleDelete } = UseHandleCustomer({ setIsLoading, setName, setIsAlterPassword, isAlterPassword, formRef, id })
     const { handleInsertImage, handleUpdateImage, handleDeleteImage } = UseHandleCustomerImage({ setIsLoading, setImage, id })
 
     return (
@@ -54,8 +54,8 @@ export const CustomerDetails: React.FC = () => {
                     showSaveButton
                     showBackButton={false}
                     showNewButton={false}
-                    showDeleteButton={false}
 
+                    onClickDeleteButton={() => handleDelete(Number(id), name)}
                     onClickSaveButton={() => formRef.current?.submitForm()}
                 />
             }>

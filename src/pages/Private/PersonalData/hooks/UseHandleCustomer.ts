@@ -26,7 +26,7 @@ interface IUseHandleCustomerProps {
 }
 
 export const UseHandleCustomer = ({ setIsLoading, setName, setIsAlterPassword, isAlterPassword, formRef, id }: IUseHandleCustomerProps) => {
-    const { handleName } = useAuthContext()
+    const { handleName, logout } = useAuthContext()
 
     const handleSave = async (data: IFormDataUpdate) => {
         try {
@@ -74,9 +74,9 @@ export const UseHandleCustomer = ({ setIsLoading, setName, setIsAlterPassword, i
         }
     }
 
-    /* const handleDelete = async (id: number, name: string) => {
+    const handleDelete = async (id: number, name: string) => {
 
-        if (confirm(`Realmente deseja apagar "${name}"?`)) {
+        if (confirm(`Realmente deseja encerrar sua conta, ${name}?`)) {
             const result = await CustomerService.deleteById(id)
     
             if (result instanceof Error) {
@@ -85,11 +85,11 @@ export const UseHandleCustomer = ({ setIsLoading, setName, setIsAlterPassword, i
             }
     
             toast.success('Registro apagado com sucesso!')
-            navigate('/admin/customer')
+            logout()
         }
-    } */
+    }
 
-    return { handleSave }
+    return { handleSave, handleDelete }
 }
 
 
