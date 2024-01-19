@@ -16,9 +16,9 @@ import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
     return (
-        <AuthProvider>
-            <AppThemeProvider>
-                <CartProvider>
+        <AppThemeProvider>
+            <CartProvider>
+                <AuthProvider>
 
                     <BrowserRouter>
 
@@ -31,9 +31,9 @@ function App() {
                         <ToastContainer autoClose={5000} position={toast.POSITION.BOTTOM_LEFT} />
                     </BrowserRouter>
 
-                </CartProvider>
-            </AppThemeProvider>
-        </AuthProvider>
+                </AuthProvider>
+            </CartProvider>
+        </AppThemeProvider>
     )
 }
 
