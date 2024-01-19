@@ -31,12 +31,23 @@ interface ICartContextData {
 
 const CartContext = createContext({} as ICartContextData)
 
+const CART_STORAGE_KEY = 'CART_DATA'
+
 interface ICartProviderProps {
     children: React.ReactNode
 }
 export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
-    const [productsInCart, setProductsInCart] = useState<TProductCart[]>([])
+    const [productsInCart, setProductsInCart] = useState<TProductCart[]>(() => {
+        // Recupere os dados do carrinho do localStorage durante a inicialização
+        const storedCartData = localStorage.getItem(CART_STORAGE_KEY)
+        return storedCartData ? JSON.parse(storedCartData) : []
+    })
     const [cartIsOpen, setCartIsOpen] = useState(false)
+
+    const saveCartToLocalStorage = (cartData: TProductCart[]) => {
+        // Salve os dados do carrinho no localStorage
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartData))
+    }
 
     const addProductInCart = useCallback(async ({ id, image, title, price, weight, dimension, quantity, quantitySelected }: TProductCart) => {
 
@@ -49,9 +60,13 @@ export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
 
         const newProduct: TProductCart = { id, image, title, price, weight, dimension, quantity, quantitySelected }
 
-        setProductsInCart(prevProducts => [...prevProducts, newProduct])
-        toast.success('Produto adicionado ao carrinho!')
+        setProductsInCart(prevProducts => {
+            const updatedCart = [...prevProducts, newProduct]
+            saveCartToLocalStorage(updatedCart)
+            return updatedCart
+        })
 
+        toast.success('Produto adicionado ao carrinho!')
     }, [productsInCart])
 
     const updateProductQuantityFromCart = useCallback((idProduct: number, newQuantity: number): void => {
@@ -68,13 +83,16 @@ export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
         })
 
         setProductsInCart(updatedProducts)
-        
+        saveCartToLocalStorage(updatedProducts)
+
     }, [productsInCart])
 
     const removeProductFromCart = useCallback((idProduct: number) => {
 
         const updatedProducts = productsInCart.filter((product) => product.id !== idProduct)
         setProductsInCart(updatedProducts)
+        saveCartToLocalStorage(updatedProducts)
+
         toast.success('Produto removido do carrinho!')
 
     }, [productsInCart])
@@ -85,10 +103,13 @@ export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
 
     }, [cartIsOpen])
 
-    const resetCart = useCallback(() => { 
+    const resetCart = useCallback(() => {
 
         setProductsInCart([])
         setCartIsOpen(false)
+
+        // Limpe os dados do carrinho do localStorage ao redefinir o carrinho
+        localStorage.removeItem(CART_STORAGE_KEY)
 
     }, [])
 
