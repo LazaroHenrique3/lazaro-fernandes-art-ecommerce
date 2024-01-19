@@ -9,6 +9,7 @@ import {
 
 import { AuthService } from '../services/api/auth/AuthService'
 import { api } from '../services/api/axiosConfig'
+import { useCartContext } from './CartContext'
 
 interface IAuthContextData {
     name?: string
@@ -38,6 +39,8 @@ const LOCAL_STORAGE_KEY__ACCESS_LEVEL = 'ACCESS_LEVEL'
 const LOCAL_STORAGE_KEY__ACCESS_TOKEN = 'APP_ACCESS_TOKEN'
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
+    const { resetCart } = useCartContext()
+
     const [name, setName] = useState<string>()
     const [idUser, setUserId] = useState<number>()
     const [imageUser, setUserImage] = useState<string>()
@@ -113,6 +116,8 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
         api.defaults.headers.Authorization = null
         setAccessToken(undefined)
+
+        resetCart()
     }, [])
 
     const isAuthenticated = useMemo(() => !!accessToken, [accessToken])
