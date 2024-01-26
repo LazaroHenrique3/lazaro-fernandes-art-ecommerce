@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
+    Box,
+    Button,
+    Grid,
     Icon,
     IconButton,
     LinearProgress,
@@ -11,7 +14,8 @@ import {
     TableContainer,
     TableFooter,
     TableHead,
-    TableRow
+    TableRow,
+    Typography
 } from '@mui/material'
 
 import { BasePagePrivateLayout } from '../../../shared/layouts'
@@ -25,9 +29,10 @@ import {
     StyledTableRow
 } from '../../../shared/components/StyledComponents/TableComponents'
 
-import { 
-    formattedDateBR, 
-    formattedPrice 
+import {
+    formattedDateBR,
+    formattedDateUS,
+    formattedPrice
 } from '../../../shared/util'
 
 //Hooks personalizados
@@ -36,8 +41,19 @@ import {
     UseHandleSale
 } from './hooks/listHooks'
 
+import { VDateInput, VForm, VSelect, useVForm } from '../../../shared/forms'
+
+interface IFilterData {
+    status: string,
+    orderDate: Date,
+    paymentDueDate: Date,
+    orderByPrice: string
+}
+
 export const SaleList = () => {
     const [searchParams, setSearchParams] = useSearchParams()
+
+    const { formRef } = useVForm('formRef')
 
     const [rows, setRows] = useState<ISaleListAll[]>([])
     const [totalCount, setTotalCount] = useState(0)
@@ -55,10 +71,58 @@ export const SaleList = () => {
         return Number(searchParams.get('page') || '1')
     }, [searchParams])
 
-    //Hooks personalizados
-    UseFetchSaleData({ setIsLoading, setRows, setTotalCount, page })
+    const status = useMemo(() => {
+        //Pega o parâmetro na URL
+        return searchParams.get('status') || ''
+    }, [searchParams])
 
-    const { handleCancelSale } = UseHandleSale({ setRows, rows })
+    const orderDate = useMemo(() => {
+        //Pega o parâmetro na URL
+        return searchParams.get('orderDate') || ''
+    }, [searchParams])
+
+    const paymentDueDate = useMemo(() => {
+        //Pega o parâmetro na URL
+        return searchParams.get('paymentDueDate') || ''
+    }, [searchParams])
+
+    const orderByPrice = useMemo(() => {
+        //Pega o parâmetro na URL
+        return searchParams.get('orderByPrice') || ''
+    }, [searchParams])
+
+    //Hooks personalizados
+    UseFetchSaleData({ setIsLoading, setRows, setTotalCount, page, status, orderDate, paymentDueDate, orderByPrice })
+
+    const { handleCancelSale } = UseHandleSale({ setRows, rows})
+
+    const handleSearchFilters = (data: IFilterData) => {
+        setSearchParams({
+            page: '1',
+            status: data.status,
+            orderDate: formattedDateUS(data.orderDate),
+            paymentDueDate: formattedDateUS(data.paymentDueDate),
+            orderByPrice: data.orderByPrice
+        },
+        { replace: true })
+    }
+
+    const handleResetFilters = () => {
+        setSearchParams({
+            page: '1',
+            status: '',
+            orderDate: '',
+            paymentDueDate: '',
+            orderByPrice: ''
+        },
+        { replace: true })
+
+        formRef.current?.reset()
+        formRef.current?.setData({
+            status: '',
+            orderByPrice: ''
+        })
+    }
 
     return (
         <BasePagePrivateLayout
@@ -69,6 +133,72 @@ export const SaleList = () => {
                     showNewButton={false}
                 />
             }>
+
+            <VForm ref={formRef} onSubmit={handleSearchFilters}>
+                <Box margin={1} display='flex' flexDirection='column' component={Paper} variant='outlined'>
+
+                    <Grid container direction='column' padding={2} spacing={2}>
+                        {isLoading && (
+                            <Grid item>
+                                <LinearProgress variant='indeterminate' />
+                            </Grid>
+                        )}
+
+                        <Grid item>
+                            <Typography variant='h6'>Filtros</Typography>
+                        </Grid>
+
+                        <Grid container item direction='row' spacing={2}>
+                            <Grid item xs={12} sm={12} md={6} lg={2} xl={2}>
+                                <VSelect
+                                    fullWidth
+                                    label='Status'
+                                    name='status'
+                                    options={[
+                                        { value: 'Ag. Pagamento', label: 'Ag. Pagamento' },
+                                        { value: 'Em preparação', label: 'Em preparação' },
+                                        { value: 'Enviado', label: 'Enviado' },
+                                        { value: 'Concluída', label: 'Concluída' },
+                                        { value: 'Cancelada', label: 'Cancelada' }
+                                    ]}
+                                    disabled={isLoading} />
+                            </Grid>
+
+                            <Grid item xs={12} sm={12} md={6} lg={2} xl={2}>
+                                <VDateInput label='Data do pedido' name='orderDate' disabled={isLoading} />
+                            </Grid>
+
+                            <Grid item xs={12} sm={12} md={6} lg={2} xl={2}>
+                                <VDateInput label='Data de vencimento' name='paymentDueDate' disabled={isLoading} />
+                            </Grid>
+
+                            <Grid item xs={12} sm={12} md={6} lg={2} xl={2}>
+                                <VSelect
+                                    fullWidth
+                                    label='Total'
+                                    name='orderByPrice'
+                                    options={[
+                                        { value: 'DESC', label: 'Maior Valor' },
+                                        { value: 'ASC', label: 'Menor Valor' },
+                                    ]}
+                                    disabled={isLoading} />
+                            </Grid>
+
+                            <Grid item xs={12} sm={12} md={6} lg={2} xl={2}>
+                                <Box display='flex' gap={2}>
+                                    <Button variant='contained' type='submit' sx={{ marginTop: 1 }} disabled={isLoading}>
+                                        <Icon>search</Icon>
+                                    </Button>
+
+                                    <Button variant='outlined' type='button' sx={{ marginTop: 1 }} onClick={handleResetFilters}>
+                                        <Icon>refresh</Icon>
+                                    </Button>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </VForm>
 
             <TableContainer component={Paper} sx={{ m: 1, width: 'auto' }} >
                 <Table>
@@ -98,7 +228,7 @@ export const SaleList = () => {
                                 </StyledTableCell>
 
                                 <StyledTableCell size='small'>{`#${row.id}`}</StyledTableCell>
-                                <StyledTableCellStatus size='small' status={row.status}/>
+                                <StyledTableCellStatus size='small' status={row.status} />
                                 <StyledTableCell size='small'>{formattedDateBR(row.order_date)}</StyledTableCell>
                                 <StyledTableCell size='small'>{formattedDateBR(row.payment_due_date)}</StyledTableCell>
                                 <StyledTableCell size='small'>{formattedPrice(row.total + row.shipping_cost)}</StyledTableCell>
