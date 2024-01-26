@@ -137,9 +137,9 @@ export const SaleDetails: React.FC = () => {
                 </Box>
             </VForm>
 
-            <TableSaleItems 
-                isLoading={isLoading} 
-                salesItemsList={salesItems}/>
+            <TableSaleItems
+                isLoading={isLoading}
+                salesItemsList={salesItems} />
 
             <SaleInfoSection
                 isLoading={isLoading}

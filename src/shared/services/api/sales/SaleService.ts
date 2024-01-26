@@ -92,13 +92,13 @@ interface ErrorResponse {
     }
 }
 
-const getAll = async (page = 1, filter = '', idCustomer: number, id?: number): Promise<ISaleTotalCount | Error> => {
+const getAll = async (page = 1, filter = '', status = '', orderDate = '', paymentDueDate = '', orderByPrice = '', idCustomer: number, id?: number): Promise<ISaleTotalCount | Error> => {
     let relativeUrl = ''
 
     if (id) {
-        relativeUrl = `/sale/${idCustomer}?id=${id}&page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}`
+        relativeUrl = `/sale/${idCustomer}?id=${id}&page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}&status=${status}&orderDate=${orderDate}&paymentDueDate=${paymentDueDate}&orderByPrice=${orderByPrice}`
     } else {
-        relativeUrl = `/sale/${idCustomer}?page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}`
+        relativeUrl = `/sale/${idCustomer}?page=${page}&limit=${Environment.LINE_LIMIT}&filter=${filter}&status=${status}&orderDate=${orderDate}&paymentDueDate=${paymentDueDate}&orderByPrice=${orderByPrice}`
     }
 
     try {

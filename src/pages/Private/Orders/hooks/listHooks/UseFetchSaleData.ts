@@ -17,9 +17,13 @@ interface IUseFetchSaleDataProps {
     setRows: (sales: ISaleListAll[]) => void
     setTotalCount: (total: number) => void
     page: number
+    status: string,
+    orderDate: string,
+    paymentDueDate: string,
+    orderByPrice: string
 }
 
-export const UseFetchSaleData = ({ setIsLoading, setRows, setTotalCount, page }: IUseFetchSaleDataProps) => {
+export const UseFetchSaleData = ({ setIsLoading, setRows, setTotalCount, page, status, orderDate, paymentDueDate, orderByPrice }: IUseFetchSaleDataProps) => {
     const { idUser } = useAuthContext()
 
     //Para adicionar delay na pesquisa
@@ -31,7 +35,7 @@ export const UseFetchSaleData = ({ setIsLoading, setRows, setTotalCount, page }:
         const fetchData = () => {
             debounce(async () => {
                 if (idUser) {
-                    const result = await SaleService.getAll(page, '', idUser)
+                    const result = await SaleService.getAll(page, '', status, orderDate, paymentDueDate, orderByPrice, idUser)
                     setIsLoading(false)
 
                     if (result instanceof Error) {
@@ -50,7 +54,7 @@ export const UseFetchSaleData = ({ setIsLoading, setRows, setTotalCount, page }:
 
         fetchData()
 
-    }, [page])
+    }, [page, status, orderDate, paymentDueDate, orderByPrice])
 }
 
 //Função resposável por comparar e ordenar os resultados
