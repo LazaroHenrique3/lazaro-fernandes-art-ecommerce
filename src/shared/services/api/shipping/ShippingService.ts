@@ -1,18 +1,12 @@
 import { api } from '../axiosConfig'
 
-export interface IPrecoPrazoResponse {
-	Codigo: string;
-	Valor: string;
-	PrazoEntrega: string;
-	ValorSemAdicionais: string;
-	ValorMaoPropria: string;
-	ValorAvisoRecebimento: string;
-	ValorDeclarado: string;
-	EntregaDomiciliar: string;
-	EntregaSabado: string;
-	obsFim: string;
-	Erro: string;
-	MsgErro: string;
+export interface IPriceDeadlineResponse {
+    ceporigem: string,
+    cepdestino: string,
+    valorpac: string,
+    prazopac: string,
+    valorsedex: string,
+    prazosedex: string
 }
 
 export interface ICalculateShipping {
@@ -21,6 +15,14 @@ export interface ICalculateShipping {
    width: number,
    length: number,
    height: number
+}
+
+export interface ITrackOrderResponse {
+    data: string,
+    descricao: string,
+    unidade: string,
+    cidade: string,
+    uf: string
 }
 
 interface ErrorResponse {
@@ -33,7 +35,7 @@ interface ErrorResponse {
     }
 }
 
-const calculateShipping = async (consultData: ICalculateShipping): Promise<IPrecoPrazoResponse[] | Error> => {
+const calculateShipping = async (consultData: ICalculateShipping): Promise<IPriceDeadlineResponse | Error> => {
     try {
         const { data } = await api.post('/shipping/calculateshipping', consultData)
 
@@ -49,6 +51,23 @@ const calculateShipping = async (consultData: ICalculateShipping): Promise<IPrec
     }
 }
 
+const trackOrder = async (trackingCode: string): Promise<ITrackOrderResponse[] | Error> => {
+    try {
+        const { data } = await api.post(`/shipping/trackOrder/${trackingCode}`)
+
+        if (data) {
+            return data
+        }
+
+        return new Error('Erro ao rastrear pedido.')
+
+    } catch (error) {
+        console.error(error)
+        return new Error((error as ErrorResponse).response?.data?.errors?.default || 'Erro ao rastrear pedido.')
+    }
+}
+
 export const ShippingService = {
     calculateShipping,
+    trackOrder
 }
