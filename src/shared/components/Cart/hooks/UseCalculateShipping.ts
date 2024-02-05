@@ -16,7 +16,7 @@ import {
 import { TProductCart, useCartContext } from '../../../contexts'
 
 import {
-    IPrecoPrazoResponse,
+    IPriceDeadlineResponse,
     ShippingService
 } from '../../../services/api/shipping/ShippingService'
 
@@ -26,24 +26,18 @@ interface IUseCalculateShippingProps {
 }
 
 const INITIAL_VALUES = {
-    Codigo: '0',
-    Valor: '0',
-    PrazoEntrega: '0',
-    ValorSemAdicionais: '0',
-    ValorMaoPropria: '0',
-    ValorAvisoRecebimento: '0',
-    ValorDeclarado: '0',
-    EntregaDomiciliar: '0',
-    EntregaSabado: '0',
-    obsFim: '0',
-    Erro: '0',
-    MsgErro: '0'
+    ceporigem: '0',
+    cepdestino: '0',
+    valorpac: '0',
+    prazopac: '0',
+    valorsedex: '0',
+    prazosedex: '0'
 }
 
 export const UseCalculateShipping = ({ setIsLoading, formRef }: IUseCalculateShippingProps) => {
     const { productsInCart } = useCartContext()
 
-    const [shipping, setShipping] = useState<IPrecoPrazoResponse>(INITIAL_VALUES)
+    const [shipping, setShipping] = useState<IPriceDeadlineResponse>(INITIAL_VALUES)
 
     const calculateShipping = async (data: IFormData) => {
         try {
@@ -67,7 +61,7 @@ export const UseCalculateShipping = ({ setIsLoading, formRef }: IUseCalculateShi
                 return
             }
 
-            setShipping(result[0])
+            setShipping(result)
         } catch (errors) {
             const errorsYup: yup.ValidationError = errors as yup.ValidationError
 

@@ -23,6 +23,7 @@ interface IUseFetchSaleDataProps {
     setSaleStatus: (status: TSaleStatus) => void
     setSaleItems: (saleItems: ISaleItemsList[]) => void
     setSaleAddress: (saleAddress: IListAddress) => void
+    setTrackingCode: (trackingCode: undefined | string) => void
     formRef: React.RefObject<FormHandles>
     id: string
 }
@@ -34,6 +35,7 @@ export const UseFetchSaleData = ({
     setPaymentMethod,
     setSaleStatus, 
     setSaleAddress, 
+    setTrackingCode,
     formRef, 
     id }: IUseFetchSaleDataProps) => {
 
@@ -71,6 +73,7 @@ export const UseFetchSaleData = ({
 
             setPaymentMethod(sale.payment_method)
             setSaleStatus(sale.status)
+            setTrackingCode(sale.tracking_code)
 
             setName(`${formattedOrder.customer_name} - #${formattedOrder.id}`)
             formRef.current?.setData(formattedOrder)

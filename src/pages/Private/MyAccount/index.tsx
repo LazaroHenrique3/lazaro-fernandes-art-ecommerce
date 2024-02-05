@@ -4,7 +4,7 @@ export const MyAccount = () => {
 
     return (
         <BasePagePrivateLayout title={'Minha Conta'}>
-
+            <></>
         </BasePagePrivateLayout>
     )
 }

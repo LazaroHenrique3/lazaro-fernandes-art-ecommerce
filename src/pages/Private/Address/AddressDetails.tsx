@@ -50,7 +50,7 @@ export const AddressDetails: React.FC = () => {
 
                     onClickSaveButton={() => formRef.current?.submitForm()}
                     onClickDeleteButton={() => handleDelete(Number(id))}
-                    onClickBackButton={() => navigate('/customer/address')}
+                    onClickBackButton={() => navigate(-1)}
                     onClickNewButton={() => navigate('/customer/address/details/new')}
                 />
             }>

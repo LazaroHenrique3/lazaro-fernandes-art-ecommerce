@@ -36,6 +36,7 @@ export const UseHandleSale = ({ formRef, setSaleStatus, setIsLoading }: IUseCalc
                 return
             }
 
+            toast.success('Pagamento processado com sucesso!')
             setSaleStatus('Em preparação')
 
             //Adicionando as informações atualizadas
@@ -58,6 +59,7 @@ export const UseHandleSale = ({ formRef, setSaleStatus, setIsLoading }: IUseCalc
                 return
             }
 
+            toast.success('Pedido concluído com sucesso!')
             setSaleStatus('Concluída')
 
             //Adicionando as informações atualizadas

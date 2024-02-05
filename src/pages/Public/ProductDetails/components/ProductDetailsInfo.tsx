@@ -10,12 +10,12 @@ import {
     Box
 } from '@mui/material'
 
-import { 
-    formattedDateBR, 
-    formattedPrice 
+import {
+    formattedDateBR,
+    formattedPrice
 } from '../../../../shared/util'
 
-import { useCartContext } from '../../../../shared/contexts'
+import { TProductCart, useCartContext } from '../../../../shared/contexts'
 import { IListProduct } from '../../../../shared/services/api/product/ProductService'
 import { InfoItem, InfoSection } from './InfoComponents'
 
@@ -28,18 +28,31 @@ export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) =
 
     const [qtdSelectedProducts, setQtdSelectedProducts] = useState(1)
 
-    const { addProductInCart } = useCartContext()
+    const { addProductInCart, toggleCartIsOpen } = useCartContext()
+
+    const handleBuyProduct = (product: TProductCart) => {
+        addProductInCart(product)
+        toggleCartIsOpen()
+    }
 
     return (
         <Grid container item sm={12} md={7}>
             <Box width='100%' display='flex' alignSelf='center' flexDirection='column' rowGap={2} alignItems='start'>
+                <Button
+                    variant='outlined'
+                    startIcon={<Icon>arrow_back_icon</Icon>}
+                    onClick={() => navigate(-1)}
+                >
+                    Voltar
+                </Button>
+
                 <InfoSection title="Detalhes">
                     <InfoItem label="Técnica" value={product.technique_name} />
                     <InfoItem label="Categoria" value={product.category_name} />
                     <InfoItem label="Dimensões(cm)" value={product.dimension_name} />
                     <InfoItem label="Tipo" value={product.type} />
-                    <InfoItem label="Produção" value={formattedDateBR(product.production_date)}/>
-                    <InfoItem label="Quantidade" value={String(product.quantity)}/>
+                    <InfoItem label="Produção" value={formattedDateBR(product.production_date)} />
+                    <InfoItem label="Quantidade" value={String(product.quantity)} />
                 </InfoSection>
 
                 {product.description && (
@@ -74,9 +87,26 @@ export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) =
                 }
 
                 <Box display='flex' gap={2}>
+                    <Button
+                        variant='contained'
+                        endIcon={<Icon>shopping_cart_icon</Icon>}
+                        onClick={() => handleBuyProduct({
+                            id: product.id,
+                            title: product.title,
+                            image: product.main_image,
+                            price: product.price,
+                            weight: product.weight,
+                            dimension: product.dimension_name,
+                            quantity: product.quantity,
+                            quantitySelected: qtdSelectedProducts
+                        })}
+                    >
+                        Comprar
+                    </Button>
+
                     {(product.status !== 'Vendido') &&
                         <Button
-                            variant='contained'
+                            variant='outlined'
                             endIcon={<Icon>add_shopping_cart_icon</Icon>}
                             onClick={() => addProductInCart({
                                 id: product.id,
@@ -91,14 +121,6 @@ export const ProductDetailsInfo: React.FC<IProductDetailsInfo> = ({ product }) =
                             Adicionar ao carrinho
                         </Button>
                     }
-
-                    <Button
-                        variant='outlined'
-                        endIcon={<Icon>arrow_back_icon</Icon>}
-                        onClick={() => navigate(-1)}
-                    >
-                        Voltar
-                    </Button>
                 </Box>
             </Box>
         </Grid >

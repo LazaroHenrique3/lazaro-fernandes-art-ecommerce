@@ -52,8 +52,10 @@ export const SaleDetails: React.FC = () => {
     const [salesItems, setSaleItems] = useState<ISaleItemsList[]>([])
     const [saleAddress, setSaleAddress] = useState<IListAddress>({} as IListAddress)
 
+    const [trackingCode, setTrackingCode] = useState<undefined | string>(undefined)
+
     //Hooks personalizados
-    UseFetchSaleData({ setIsLoading, setSaleItems, setSaleAddress, setPaymentMethod, setSaleStatus, setName, formRef, id })
+    UseFetchSaleData({ setIsLoading, setSaleItems, setSaleAddress, setPaymentMethod, setSaleStatus, setName, setTrackingCode, formRef, id })
     const { handlePaySale, handleConcludeSale } = UseHandleSale({ formRef, setSaleStatus, setIsLoading })
 
     return (
@@ -65,7 +67,7 @@ export const SaleDetails: React.FC = () => {
                     showNewButton={false}
                     showDeleteButton={false}
 
-                    onClickBackButton={() => navigate('/customer/orders')}
+                    onClickBackButton={() => navigate(-1)}
                 />
             }>
 
@@ -142,11 +144,14 @@ export const SaleDetails: React.FC = () => {
                 salesItemsList={salesItems} />
 
             <SaleInfoSection
+                formRef={formRef}
                 isLoading={isLoading}
                 idSale={Number(id)}
                 saleStatus={saleStatus}
                 paymentMethod={paymentMethod}
                 saleAddress={saleAddress}
+                trackingCode={trackingCode}
+                setSaleAddress={setSaleAddress}
                 handlePaySale={handlePaySale}
                 handleConcludeSale={handleConcludeSale}
             />

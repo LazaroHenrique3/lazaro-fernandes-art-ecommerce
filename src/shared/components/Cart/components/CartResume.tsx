@@ -100,21 +100,21 @@ export const CartResume = () => {
                 </Box>
             </VForm>
 
-            {Number(shipping.Valor.replace(',', '.')) > 0 && (
+            {Number(shipping.valorpac.replace(',', '.')) > 0 && (
                 <Box>
-                    Aproximadamente {shipping.PrazoEntrega} dias.
+                    Aproximadamente {shipping.prazopac} dias.
                 </Box>
             )}
 
             <CartSummaryLine label="Subtotal" value={subtotal} />
-            <CartSummaryLine label="Frete(PAC)" value={Number(shipping.Valor.replace(',', '.'))} />
+            <CartSummaryLine label="Frete(PAC)" value={Number(shipping.valorpac.replace(',', '.'))} />
             <Divider variant='fullWidth' />
-            <CartSummaryLine label="Total" value={(subtotal + Number(shipping.Valor.replace(',', '.')))} />
+            <CartSummaryLine label="Total" value={(subtotal + Number(shipping.valorpac.replace(',', '.')))} />
 
             <Box display='flex'>
                 <Button
                     fullWidth
-                    disabled={(isLoading || Number(shipping.Valor.replace(',', '.')) <= 0)}
+                    disabled={(isLoading || Number(shipping.valorpac.replace(',', '.')) <= 0)}
                     onClick={handleCheckout}
                     variant='contained'>
                     Finalizar compra

@@ -17,23 +17,30 @@ import {
     DeliveryAddressCard,
     OrderPaymentOrConcludeCard,
 } from './saleInfoComponents'
+import { FormHandles } from '@unform/core'
 
 interface ISaleInfoSection {
+    formRef: React.RefObject<FormHandles>
     isLoading: boolean
     idSale: number
     saleStatus: TSaleStatus,
     saleAddress: IListAddress,
     paymentMethod: TSalePaymentMethods,
+    trackingCode?: string,
+    setSaleAddress: (address: IListAddress) => void
     handlePaySale: (idSale: number) => void
     handleConcludeSale: (idSale: number) => void
 }
 
 export const SaleInfoSection: React.FC<ISaleInfoSection> = ({
+    formRef,
     isLoading,
     idSale,
     saleStatus,
     saleAddress,
     paymentMethod,
+    trackingCode,
+    setSaleAddress,
     handlePaySale,
     handleConcludeSale
 }) => {
@@ -57,6 +64,10 @@ export const SaleInfoSection: React.FC<ISaleInfoSection> = ({
             ) : (
                 <>
                     <DeliveryAddressCard
+                        formRef={formRef}
+                        statusSale={saleStatus}
+                        idSale={idSale}
+                        idAddress={saleAddress.id}
                         cep={saleAddress.cep}
                         city={saleAddress.city}
                         state={saleAddress.state}
@@ -64,10 +75,12 @@ export const SaleInfoSection: React.FC<ISaleInfoSection> = ({
                         number={String(saleAddress.number)}
                         street={saleAddress.street}
                         complement={saleAddress.complement}
+                        setSaleAddress={setSaleAddress}
                     />
 
                     {(saleStatus === 'Ag. Pagamento' || saleStatus === 'Enviado') &&
                         <OrderPaymentOrConcludeCard
+                            trackingCode={trackingCode}
                             handlePaymentOrder={() => handlePaySale(idSale)}
                             handleConcludeOrder={() => handleConcludeSale(idSale)}
                             paymentMethod={paymentMethod}

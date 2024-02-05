@@ -30,8 +30,10 @@ import {
 
 //Hooks peronalizados
 import {
+    UseCalculateShipping,
     UseHandleSale
 } from './hooks'
+import { formattedDateUS } from '../../../shared/util'
 
 interface ISelectAddressFunctionProps {
     idAddress: string
@@ -44,7 +46,14 @@ export const Checkout = () => {
     const navigate = useNavigate()
 
     const [isLoading, setIsLoading] = useState(false)
+    const [calculateShippingLoading, setCalculateShippingLoading] = useState(false)
+
     const [selectedStep, setSelectedStep] = useState(0)
+    const { calculateShipping } = UseCalculateShipping({ setCalculateShippingLoading })
+
+    const [infoShippingPac, setInfoShippingPac] = useState({ price: '0', deadline: '' })
+    const [infoShippingSedex, setInfoShippingSedex] = useState({ price: '0', deadline: '' })
+    
 
     const [selectedAddress, setSelectedAddress] = useState<ISelectAddressFunctionProps>({ idAddress: '', selectedAddressCep: '' })
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<TSalePaymentMethods>('PIX')
@@ -64,6 +73,43 @@ export const Checkout = () => {
         (productsInCart.length === 0) ? navigate('/store') : ''
     }, [])
 
+    useEffect(() => {
+
+        const fetchData = async () => {
+            if (!selectedAddress.selectedAddressCep || selectedAddress.selectedAddressCep === '') return
+            const result = await calculateShipping(selectedAddress.selectedAddressCep)
+
+            if (result) {
+
+                // PAC
+                const ExpectedDeliveryTimePac = new Date()
+                ExpectedDeliveryTimePac.setDate(ExpectedDeliveryTimePac.getDate() + Number(result.prazopac))
+                const formattedDeadlinePac = formattedDateUS(ExpectedDeliveryTimePac)
+
+                const shippingPricePac = result.valorpac.replace(',', '.')
+
+                // SEDEX
+                const ExpectedDeliveryTimeSedex = new Date()
+                ExpectedDeliveryTimeSedex.setDate(ExpectedDeliveryTimeSedex.getDate() + Number(result.prazosedex))
+                const formattedDeadlineSedex = formattedDateUS(ExpectedDeliveryTimeSedex)
+
+                const shippingPriceSedex = result.valorsedex.replace(',', '.')
+
+                setInfoShippingPac({ price: shippingPricePac, deadline: formattedDeadlinePac})
+                setInfoShippingSedex({ price: shippingPriceSedex, deadline: formattedDeadlineSedex})
+
+                if (selectedShippingMethod === 'PAC') {
+                    setSelectedShippingPrice(Number(shippingPricePac))
+                    setEstimatedDeliveryDate(formattedDeadlinePac)
+                }
+            }
+
+        }
+
+        fetchData()
+
+    }, [selectedAddress])
+
     const AddressSelectWrapper = () => (
         <AddressSelect
             selectedAddress={selectedAddress.idAddress}
@@ -72,11 +118,13 @@ export const Checkout = () => {
 
     const ShippingMethodWrapper = () => (
         <ShippingMethod
+            isLoading={calculateShippingLoading}
             selectedShippingMethod={selectedShippingMethod}
+            infoShippingPac={infoShippingPac}
+            infoShippingSedex={infoShippingSedex}
             setShippingMethod={setSelectedShippingMethod}
             setSelectedShippingPrice={setSelectedShippingPrice}
-            setEstimatedDeliveryDate={setEstimatedDeliveryDate}
-            selectedShippingCep={selectedAddress.selectedAddressCep} />
+            setEstimatedDeliveryDate={setEstimatedDeliveryDate} />
     )
 
     const PaymentMethodWrapper = () => (

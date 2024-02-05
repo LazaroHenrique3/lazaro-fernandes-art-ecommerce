@@ -12,8 +12,10 @@ import {
     TSalePaymentMethods,
     TSaleStatus
 } from '../../../../../shared/services/api/sales/SaleService'
+import { TrackOrder } from '../../../../../shared/components/Modals/TrackOrder/TrackOrder'
 
 interface IPaymentSelectCardProps {
+    trackingCode?: string
     saleStatus: TSaleStatus
     paymentMethod: TSalePaymentMethods
     handlePaymentOrder: () => void
@@ -21,6 +23,7 @@ interface IPaymentSelectCardProps {
 }
 
 export const OrderPaymentOrConcludeCard: React.FC<IPaymentSelectCardProps> = ({
+    trackingCode,
     paymentMethod,
     saleStatus,
     handlePaymentOrder,
@@ -47,12 +50,19 @@ export const OrderPaymentOrConcludeCard: React.FC<IPaymentSelectCardProps> = ({
                                 Pagar
                             </Button>
                         ) : (
-                            <Button
-                                onClick={handleConcludeOrder}
-                                variant='contained'
-                                startIcon={<Icon>check_circle</Icon>}>
-                                Pedido recebido
-                            </Button>
+                            <Box display="flex" flexDirection='column' gap={1}>
+                                {trackingCode && (
+                                    <TrackOrder trackingCode={trackingCode} />
+                                )}
+
+                                <Button
+                                    fullWidth
+                                    onClick={handleConcludeOrder}
+                                    variant='contained'
+                                    startIcon={<Icon>check_circle</Icon>}>
+                                    Pedido recebido
+                                </Button>
+                            </Box>
                         )}
                     </Box>
                 </CardContent>

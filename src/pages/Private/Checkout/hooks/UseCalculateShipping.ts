@@ -9,16 +9,16 @@ import {
 } from '../../../.././shared/services/api/shipping/ShippingService'
 
 interface IUseCalculateShippingProps {
-    setIsLoading: (status: boolean) => void
+    setCalculateShippingLoading: (status: boolean) => void
 }
 
-export const UseCalculateShipping = ({ setIsLoading }: IUseCalculateShippingProps) => {
+export const UseCalculateShipping = ({ setCalculateShippingLoading }: IUseCalculateShippingProps) => {
     const { productsInCart } = useCartContext()
 
     const calculateShipping = async (cep: string) => {
         try {
             const formattedCep = cep.replace(/[^\w]/g, '')
-            setIsLoading(true)
+            setCalculateShippingLoading(true)
 
             const formattedRequest = {
                 cep: formattedCep,
@@ -29,7 +29,7 @@ export const UseCalculateShipping = ({ setIsLoading }: IUseCalculateShippingProp
             }
 
             const result = await ShippingService.calculateShipping(formattedRequest)
-            setIsLoading(false)
+            setCalculateShippingLoading(false)
 
             if (result instanceof Error) {
                 toast.error(result.message)
