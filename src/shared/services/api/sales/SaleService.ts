@@ -2,6 +2,7 @@ import { Environment } from '../../../environment'
 import { api } from '../axiosConfig'
 
 import { IListAddress } from '.././address/AddressService'
+import { IPriceDeadlineResponse } from '../shipping/ShippingService'
 
 export type TSalePaymentMethods = 'PIX' | 'BOLETO' | 'C. CREDITO' | 'C.DEBITO'
 export type TSaleShippingMethods = 'PAC' | 'SEDEX'
@@ -75,6 +76,14 @@ export interface ISaleListAll {
     address_id: number
     customer_name: string
     total: number
+}
+
+export interface IUpdatedSaleAddress {
+    updatedAddress: IListAddress,
+    estimated_delivery_date: string,
+    shipping_method: 'PAC' | 'SEDEX',
+    shipping_cost: number
+    subtotal: number
 }
 
 type ISaleTotalCount = {
@@ -195,7 +204,39 @@ const concludeSale = async (idCustomer: number, idSale: number): Promise<void | 
 
 }
 
+const updateSaleAddress = async (idCustomer: number, idSale: number, idNewAddress: number, shippingMethod: TSaleShippingMethods): Promise<IUpdatedSaleAddress | Error> => {
 
+    try {
+        const { data } = await api.put(`/sale/update/sale-address/${idCustomer}/${idSale}/${idNewAddress}/${shippingMethod}`)
+
+        if (data) {
+            return data
+        }
+
+        return new Error('Erro ao receber retorno.')
+    } catch (error) {
+        console.error(error)
+        return new Error((error as ErrorResponse).response?.data?.errors?.default || 'Erro ao atualizar endereço de entrega.')
+    }
+
+}
+
+const recalculateShipping = async (idCustomer: number, idSale: number, cep: string): Promise<IPriceDeadlineResponse | Error> => {
+
+    try {
+        const { data } = await api.post(`/sale/recalculate-shipping/${idCustomer}/${idSale}/${cep}`)
+
+        if (data) {
+            return data
+        }
+
+        return new Error('Erro ao calcular frete.')
+    } catch (error) {
+        console.error(error)
+        return new Error((error as ErrorResponse).response?.data?.errors?.default || 'Erro ao calcular frete.')
+    }
+
+} 
 
 export const SaleService = {
     getAll,
@@ -203,7 +244,9 @@ export const SaleService = {
     create,
     cancelSale,
     paySale,
-    concludeSale
+    concludeSale,
+    updateSaleAddress,
+    recalculateShipping
 }
 
 
