@@ -7,9 +7,9 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import { getInfoByCep } from '../../../../services/external/viaCep/GetInfoByCep'
-import { 
-    AddressService, 
-    IListAddress 
+import {
+    AddressService,
+    IListAddress
 } from '../../../../services/api/address/AddressService'
 import { useAuthContext } from '../../../../contexts'
 
@@ -40,6 +40,15 @@ export const UseNewAddress = ({ setIsLoading, setOpen, addresses, updateAddresse
             setIsLoading(false)
 
             if (result instanceof Error) {
+                formRef.current?.setData({
+                    cep: '',
+                    city: '',
+                    state: '',
+                    complement: '',
+                    neighborhood: '',
+                    street: ''
+                })
+
                 toast.error(result.message)
                 return
             }
@@ -74,7 +83,7 @@ export const UseNewAddress = ({ setIsLoading, setOpen, addresses, updateAddresse
 
             if (result instanceof Error) {
                 toast.error(result.message)
-            } else {                
+            } else {
                 //Formatando o novo objeto de Address
                 const newAddress: IListAddress = {
                     id: result,
