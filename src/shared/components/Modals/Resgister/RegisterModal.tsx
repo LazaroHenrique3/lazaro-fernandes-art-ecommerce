@@ -7,7 +7,8 @@ import {
     Typography,
     CircularProgress,
     Grid,
-    LinearProgress
+    LinearProgress,
+    Icon
 } from '@mui/material'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 
@@ -40,6 +41,7 @@ const style = {
 import {
     UseRegisterCustomer
 } from './hooks'
+import { handleFillOutForm } from '../../../util/devUtils/customer'
 
 export const RegisterModal = () => {
     const theme = useTheme()
@@ -75,9 +77,15 @@ export const RegisterModal = () => {
                     <VForm ref={formRef} onSubmit={handleSave}>
                         <Box margin={1} display='flex' flexDirection='column'>
 
-                            <Typography variant='h4' align='center'>
-                                Cadastre-se
-                            </Typography>
+                            <Box display="flex" gap={2}>
+                                <Typography variant='h4' align='center'>
+                                    Cadastre-se
+                                </Typography>
+
+                                <Button variant="outlined" onClick={() => handleFillOutForm(formRef)}>
+                                    <Icon>code_icon</Icon>
+                                </Button>
+                            </Box>
 
                             <Grid container direction='column' padding={2} spacing={2}>
                                 {isLoading && (
