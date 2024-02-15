@@ -158,8 +158,7 @@ export const RegisterModal = () => {
                                                     label='Senha'
                                                     disabled={isLoading}
                                                     showPassword={showPassword}
-                                                    handleClickShowPassword={setShowPassword}
-                                                    size='small' />
+                                                    handleClickShowPassword={setShowPassword}/>
                                             </Grid>
 
                                             <Grid item xs={12}>
@@ -169,8 +168,7 @@ export const RegisterModal = () => {
                                                     label='Confirmar Senha'
                                                     disabled={isLoading}
                                                     showPassword={showConfirmPassword}
-                                                    handleClickShowPassword={setShowConfirmPassword}
-                                                    size='small' />
+                                                    handleClickShowPassword={setShowConfirmPassword}/>
                                             </Grid>
 
                                             <Grid item xs={12} >

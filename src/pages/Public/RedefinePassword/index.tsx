@@ -28,7 +28,6 @@ export const RedefinePassword = () => {
     const { formRef } = useVForm('formRef')
 
     useEffect(() => {
-        console.log('TesteEmail: ', email)
         formRef.current?.setData({
             email: email,
             verification_token: '',
