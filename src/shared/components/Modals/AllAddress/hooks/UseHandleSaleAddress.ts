@@ -19,8 +19,6 @@ interface IUseHandleSaleAddressProps {
     handleClose: () => void
 }
 
-
-
 export const UseHandleSaleAddress = ({ formRef, setSaleAddress, handleClose, setCardLoading }: IUseHandleSaleAddressProps) => {
     const navigate = useNavigate()
 
@@ -30,7 +28,11 @@ export const UseHandleSaleAddress = ({ formRef, setSaleAddress, handleClose, set
         if (!idUser) return
 
         if (confirm('Confirma a alteração de endereço de entrega?')) {
+            setCardLoading(true)
+
             const result = await SaleService.updateSaleAddress(idUser, idSale, idNewAddress, shippingMethod)
+
+            setCardLoading(false)
 
             if (result instanceof Error) {
                 toast.error(result.message)

@@ -80,9 +80,15 @@ export const AllAddresses: React.FC<IAllAddressesProps> = ({ formRef, selectedAd
                 aria-describedby="child-modal-description"
             >
                 <Box sx={{ ...style, maxWidth: '600px' }}>
-                    <Typography variant='h6' align='center'>
-                        Seus endereços
-                    </Typography>
+                    <Box padding='5px' gap={2} display='flex' justifyContent='center' alignItems='center' width='100%'>
+                        <Typography variant='h6' align='center'>
+                            Seus endereços
+                        </Typography>
+
+                        {(cardLoading) && (
+                            <CircularProgress size='20px' variant='indeterminate' />
+                        )}
+                    </Box>
 
                     {(isLoading) ? (
                         <Box padding='5px' display='flex' justifyContent='center' width='100%'>
