@@ -61,6 +61,22 @@ export const AddressList = () => {
 
     const { handleDelete } = UseHandleAddress({ setRows, rows, search })
 
+    const handlePagination = (page: string) => {
+        setSearchParams({
+            search: search,
+            page: page,
+        },
+        { replace: true })
+    }
+
+    const handleSearch = (newSearch: string) => {
+        setSearchParams({
+            search: newSearch,
+            page: '1',
+        },
+        { replace: true })
+    }
+
     return (
         <BasePagePrivateLayout
             title={'Meus Endereços'}
@@ -70,7 +86,7 @@ export const AddressList = () => {
                     newButtonText='Novo'
                     searchText={search}
                     onClickNewButton={() => navigate('/customer/address/details/new')}
-                    onChangeSearchText={text => setSearchParams({ search: text, page: '1' }, { replace: true })}
+                    onChangeSearchText={text => handleSearch(text)}
                 />
             }>
 
@@ -131,7 +147,7 @@ export const AddressList = () => {
                                     <Pagination
                                         page={page}
                                         count={Math.ceil(totalCount / Environment.LINE_LIMIT)}
-                                        onChange={(e, newPage) => setSearchParams({ search, page: newPage.toString() }, { replace: true })}
+                                        onChange={(e, newPage) => handlePagination(newPage.toString())}
                                     />
                                 </StyledTableCell>
                             </TableRow>
