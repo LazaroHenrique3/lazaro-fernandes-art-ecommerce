@@ -2,6 +2,7 @@ import * as yup from 'yup'
 
 import { cpf } from 'cpf-cnpj-validator'
 import { formattedDateBR } from '../../../../shared/util'
+import { checkIsLeapYear } from '../../../../shared/util/validationUtils/date'
 
 export interface IFormData {
     status: 'Ativo' | 'Inativo'
@@ -63,6 +64,13 @@ export const formatValidationSchema: yup.Schema<IFormData> = yup.object().shape(
                 currentDate.getDate()
             )
 
+            //Verificando se a data é valida caso o ano for bissexto
+            const isLeapYear = checkIsLeapYear(new Date(value))
+            if (!isLeapYear) {
+                throw new yup.ValidationError('Essa data só é valida em anos bissextos!', value, 'date_of_birth')
+            }
+            
+            //Verificando se é de maior
             const customerBirth = new Date(value)
             if (!(customerBirth < eighteenYearsAgo)) {
                 throw new yup.ValidationError('O usuário deve ter mais de 18 anos!', value, 'date_of_birth')
