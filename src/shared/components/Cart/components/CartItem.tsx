@@ -28,10 +28,13 @@ export const CartItem: React.FC<ICartItemProps> = ({ id, image, title, price, qu
     const { updateProductQuantityFromCart, removeProductFromCart } = useCartContext()
 
     const handleUpdateQuantity = (newQuantity: number) => {
+        //Verificando se foi passado uma quantidade maior que o que tem em estoque
+        const newQuantityForUpdate = (newQuantity > quantity ) ? quantity : newQuantity
+
         // Atualize a quantidade no estado local
-        setQtdSelectedProducts(newQuantity)
+        setQtdSelectedProducts(newQuantityForUpdate)
         // Atualize o produto no context
-        updateProductQuantityFromCart(id, newQuantity)
+        updateProductQuantityFromCart(id, newQuantityForUpdate)
     }
 
     return (
